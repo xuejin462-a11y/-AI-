@@ -8,18 +8,15 @@ import os, json, time, urllib.request, urllib.error, urllib.parse, sys, subproce
 def _prompt_heartbeat_refresh():
     """
     弹出 macOS 对话框，提醒用户在 Chrome 里刷新 suno.com（Turnstile 心跳）。
+    仅在 macOS 本地运行时生效，云端/Linux 自动跳过。
 
     ⚠️ 注意（推测，未验证）：
     目前假设 Suno generate 422 "Token validation failed" 的根因是 Clerk captcha_heartbeat 过期。
     这是推测，尚未通过抓包/源码/官方文档验证。实际原因可能不同。
     如果刷新后仍然 422，需要重新调查根因，不要继续假设是心跳问题。
-
-    ──────────────────────────────────────────
-    关于"推测"标注规则：
-    凡是没有通过工具、代码、日志实际验证过的推断，说出来时必须明确标注
-    「（推测，未验证）」，不能当成事实陈述。
-    ──────────────────────────────────────────
     """
+    if sys.platform != "darwin":
+        return  # 非 macOS（如 Linux 云端），跳过
     script = '''
     tell application "Google Chrome"
         open location "https://suno.com/create"
