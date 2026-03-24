@@ -1,0 +1,40 @@
+# 密钥文件
+.env
+*.env
+
+# 日志
+logs/
+*.log
+
+# 本地产出
+输出文件/
+输出文档/
+
+# 备份文件
+*.bak
+*.bak.*
+
+# 已下载记录
+melody_downloaded_ids.txt
+
+# Node
+node_modules/
+
+# 音频/视频素材（太大，不入库）
+suno-api/参考音频/
+daily-video/bg_library/*.mp4
+daily-video/bg_library/*.png
+
+# 分析报告（本地产出）
+daily-video/analysis/
+
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# 临时文件
+/tmp/
+*.tmp

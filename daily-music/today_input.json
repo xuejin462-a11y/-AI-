@@ -1,0 +1,2763 @@
+{
+  "date": "2026-03-18",
+  "fetch_time": "18:00",
+  "charts_raw": {
+    "apple_cn": [
+      {
+        "rank": 1,
+        "title": "搁浅",
+        "artist": "周杰伦",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 2,
+        "title": "晴天",
+        "artist": "周杰伦",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 3,
+        "title": "七里香",
+        "artist": "周杰伦",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 4,
+        "title": "RUDE!",
+        "artist": "Hearts2Hearts",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 5,
+        "title": "爱错",
+        "artist": "王力宏",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 6,
+        "title": "我怀念的",
+        "artist": "孙燕姿",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 7,
+        "title": "花海",
+        "artist": "周杰伦",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 8,
+        "title": "明明就",
+        "artist": "周杰伦",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 9,
+        "title": "一路向北 (Bonus Track)",
+        "artist": "周杰伦",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 10,
+        "title": "特别的人",
+        "artist": "方大同",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 11,
+        "title": "爱在西元前",
+        "artist": "周杰伦",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 12,
+        "title": "稻香",
+        "artist": "周杰伦",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 13,
+        "title": "等你下课 (with 杨瑞代)",
+        "artist": "周杰伦",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 14,
+        "title": "爱我还是他",
+        "artist": "陶喆",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 15,
+        "title": "唯一",
+        "artist": "邓紫棋",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 16,
+        "title": "夜曲",
+        "artist": "周杰伦",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 17,
+        "title": "开始懂了",
+        "artist": "孙燕姿",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 18,
+        "title": "雨过后的风景",
+        "artist": "蔡诗芸",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 19,
+        "title": "你就不要想起我",
+        "artist": "田馥甄",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 20,
+        "title": "半岛铁盒",
+        "artist": "周杰伦",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 21,
+        "title": "爱情转移",
+        "artist": "陈奕迅",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 22,
+        "title": "告白气球",
+        "artist": "周杰伦",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 23,
+        "title": "枫",
+        "artist": "周杰伦",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 24,
+        "title": "雨爱",
+        "artist": "杨丞琳",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 25,
+        "title": "爱爱爱",
+        "artist": "方大同",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 26,
+        "title": "简单爱",
+        "artist": "周杰伦",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 27,
+        "title": "可惜没如果",
+        "artist": "林俊杰",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 28,
+        "title": "404 (New Era)",
+        "artist": "KiiiKiii",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 29,
+        "title": "发如雪",
+        "artist": "周杰伦",
+        "source": "Apple Music CN"
+      },
+      {
+        "rank": 30,
+        "title": "十年",
+        "artist": "陈奕迅",
+        "source": "Apple Music CN"
+      }
+    ],
+    "apple_global": [
+      {
+        "rank": 1,
+        "title": "Choosin' Texas",
+        "artist": "Ella Langley",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 2,
+        "title": "E85",
+        "artist": "Don Toliver",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 3,
+        "title": "iloveitiloveitiloveit",
+        "artist": "Bella Kay",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 4,
+        "title": "Stateside (with Zara Larsson)",
+        "artist": "PinkPantheress",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 5,
+        "title": "Risk It All",
+        "artist": "Bruno Mars",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 6,
+        "title": "Man I Need",
+        "artist": "Olivia Dean",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 7,
+        "title": "Be By You",
+        "artist": "Luke Combs",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 8,
+        "title": "American Girls",
+        "artist": "Harry Styles",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 9,
+        "title": "Be Her",
+        "artist": "Ella Langley",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 10,
+        "title": "Motion Party",
+        "artist": "Bossman Dlow",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 11,
+        "title": "DtMF",
+        "artist": "Bad Bunny",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 12,
+        "title": "Good Days",
+        "artist": "SZA",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 13,
+        "title": "Body",
+        "artist": "Don Toliver",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 14,
+        "title": "Freestyle",
+        "artist": "Lil Baby",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 15,
+        "title": "In A Minute",
+        "artist": "Lil Baby",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 16,
+        "title": "BAILE INoLVIDABLE",
+        "artist": "Bad Bunny",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 17,
+        "title": "Golden",
+        "artist": "HUNTR/X, EJAE, AUDREY NUNA, REI AMI & KPop Demon Hunters Cast",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 18,
+        "title": "Raindance",
+        "artist": "Dave & Tems",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 19,
+        "title": "I Just Might",
+        "artist": "Bruno Mars",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 20,
+        "title": "White Keys",
+        "artist": "Dominic Fike",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 21,
+        "title": "I'm The Problem",
+        "artist": "Morgan Wallen",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 22,
+        "title": "WAIT FOR U (feat. Drake & Tems)",
+        "artist": "Future",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 23,
+        "title": "So Easy (To Fall In Love)",
+        "artist": "Olivia Dean",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 24,
+        "title": "What I Want",
+        "artist": "Morgan Wallen & Tate McRae",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 25,
+        "title": "Ordinary",
+        "artist": "Alex Warren",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 26,
+        "title": "Chasin' You",
+        "artist": "Morgan Wallen",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 27,
+        "title": "March Madness",
+        "artist": "Future",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 28,
+        "title": "LIKE ME (feat. 42 Dugg & Lil Baby)",
+        "artist": "Future",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 29,
+        "title": "Die On This Hill",
+        "artist": "SIENNA SPIRO",
+        "source": "Apple Music Global"
+      },
+      {
+        "rank": 30,
+        "title": "Folded",
+        "artist": "Kehlani",
+        "source": "Apple Music Global"
+      }
+    ],
+    "qq_rise": [
+      {
+        "rank": 1,
+        "title": "Singalongsong",
+        "artist": "方大同",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 2,
+        "title": "Can't Take My Eyes off You",
+        "artist": "Frankie Valli",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 3,
+        "title": "Que Sera Sera",
+        "artist": "Doris Day",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 4,
+        "title": "Isn't She Lovely",
+        "artist": "Stevie Wonder",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 5,
+        "title": "演员",
+        "artist": "薛之谦",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 6,
+        "title": "幻想对白 (Fantasy Dialogue)",
+        "artist": "蒲熠星",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 7,
+        "title": "一念",
+        "artist": "张紫宁/李鑫一",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 8,
+        "title": "You (=I)",
+        "artist": "脸红的思春期 (볼빨간사춘기)",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 9,
+        "title": "狐狸",
+        "artist": "薛之谦",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 10,
+        "title": "粤语残片",
+        "artist": "陈奕迅",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 11,
+        "title": "一生清贫怎敢入繁华 (女版)",
+        "artist": "Tl",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 12,
+        "title": "美丽的神话",
+        "artist": "孙楠/韩红",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 13,
+        "title": "穿波鞋的恶魔",
+        "artist": "洪嘉豪",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 14,
+        "title": "一生清贫怎敢入繁华",
+        "artist": "Tz",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 15,
+        "title": "连名带姓",
+        "artist": "张惠妹",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 16,
+        "title": "你听得到",
+        "artist": "周杰伦",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 17,
+        "title": "爱不释手",
+        "artist": "李丽芬",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 18,
+        "title": "半生出走",
+        "artist": "胡彦斌",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 19,
+        "title": "清清如我",
+        "artist": "郁可唯",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 20,
+        "title": "Clouds",
+        "artist": "李浩玮",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 21,
+        "title": "一程山路",
+        "artist": "毛不易",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 22,
+        "title": "普通朋友",
+        "artist": "陶喆",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 23,
+        "title": "念",
+        "artist": "薛之谦",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 24,
+        "title": "M.O.",
+        "artist": "宋雨琦 (YUQI) (우기)",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 25,
+        "title": "平庸 (Live)",
+        "artist": "薛之谦",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 26,
+        "title": "跃",
+        "artist": "薛之谦",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 27,
+        "title": "夜空中最亮的星",
+        "artist": "逃跑计划",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 28,
+        "title": "西楼儿女",
+        "artist": "海来阿木",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 29,
+        "title": "风云起",
+        "artist": "许鹤缤",
+        "source": "QQ飙升榜"
+      },
+      {
+        "rank": 30,
+        "title": "天天",
+        "artist": "陶喆",
+        "source": "QQ飙升榜"
+      }
+    ],
+    "qq_hot": [
+      {
+        "rank": 1,
+        "title": "雨过后的风景",
+        "artist": "Dizzy Dizzo (蔡诗芸)",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 2,
+        "title": "恋人",
+        "artist": "李荣浩",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 3,
+        "title": "茶花开了，该回家了",
+        "artist": "王睿卓/加木",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 4,
+        "title": "爱错",
+        "artist": "王力宏",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 5,
+        "title": "演员",
+        "artist": "薛之谦",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 6,
+        "title": "唯一",
+        "artist": "G.E.M. 邓紫棋",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 7,
+        "title": "离开我的依赖",
+        "artist": "王艳薇",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 8,
+        "title": "咏春",
+        "artist": "七朵组合",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 9,
+        "title": "雨爱",
+        "artist": "杨丞琳",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 10,
+        "title": "失眠",
+        "artist": "Suki刘舒妤",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 11,
+        "title": "我怀念的",
+        "artist": "孙燕姿",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 12,
+        "title": "读心术",
+        "artist": "卓文萱",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 13,
+        "title": "人间共鸣",
+        "artist": "李健",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 14,
+        "title": "天赋",
+        "artist": "唐嫣/罗晋",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 15,
+        "title": "Lonely",
+        "artist": "Nana",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 16,
+        "title": "小半",
+        "artist": "陈粒",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 17,
+        "title": "别怕变老",
+        "artist": "王以太/艾热AIR",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 18,
+        "title": "特别的人",
+        "artist": "方大同",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 19,
+        "title": "你就不要想起我",
+        "artist": "田馥甄",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 20,
+        "title": "一样的月光",
+        "artist": "徐佳莹",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 21,
+        "title": "春娇与志明",
+        "artist": "街道办GDC/欧阳耀莹",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 22,
+        "title": "我们俩",
+        "artist": "郭顶",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 23,
+        "title": "是你没选我啊",
+        "artist": "音乐科代表洪嘉源",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 24,
+        "title": "红色高跟鞋",
+        "artist": "蔡健雅",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 25,
+        "title": "Dear D (亲爱的告诉你)",
+        "artist": "项睿娴",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 26,
+        "title": "Always Online",
+        "artist": "林俊杰",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 27,
+        "title": "开始懂了",
+        "artist": "孙燕姿",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 28,
+        "title": "Singalongsong",
+        "artist": "方大同",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 29,
+        "title": "第57次取消发送",
+        "artist": "菲菲公主（陆绮菲）",
+        "source": "QQ热歌榜"
+      },
+      {
+        "rank": 30,
+        "title": "遇见",
+        "artist": "孙燕姿",
+        "source": "QQ热歌榜"
+      }
+    ],
+    "ne_rise": [
+      {
+        "rank": 1,
+        "title": "故意没接",
+        "artist": "Double SR",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 2,
+        "title": "Singalongsong",
+        "artist": "方大同",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 3,
+        "title": "眼泪的汛期",
+        "artist": "王唯旖",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 4,
+        "title": "Can't Take My Eyes Off You",
+        "artist": "Frankie Valli",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 5,
+        "title": "杏冷淡freestyle",
+        "artist": "柴行敏",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 6,
+        "title": "可我在十六岁遇到了你",
+        "artist": "First—Top",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 7,
+        "title": "隐藏相册",
+        "artist": "Mikey-18/吴炳文/SevenJ李百万",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 8,
+        "title": "我说你呀",
+        "artist": "李雨霏_晚饭",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 9,
+        "title": "春",
+        "artist": "陈文非",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 10,
+        "title": "Isn't She Lovely",
+        "artist": "Stevie Wonder",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 11,
+        "title": "你知道天空有多蓝",
+        "artist": "椅子乐团 The Chairs",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 12,
+        "title": "无限逼近",
+        "artist": "所长sama",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 13,
+        "title": "Phone Kisses（Phonk）",
+        "artist": "suhmeduh",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 14,
+        "title": "Lonely",
+        "artist": "Nana",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 15,
+        "title": "Creepin' up on You",
+        "artist": "Darren Hayes",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 16,
+        "title": "晴 (Live)",
+        "artist": "汪苏泷",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 17,
+        "title": "You(=I)",
+        "artist": "脸红的思春期",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 18,
+        "title": "Que Sera Sera",
+        "artist": "Janet Seidel",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 19,
+        "title": "Busy Boy",
+        "artist": "RESCENE",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 20,
+        "title": "关了灯",
+        "artist": "青",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 21,
+        "title": "Clouds",
+        "artist": "李浩玮",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 22,
+        "title": "很差很差pt2",
+        "artist": "Arboi氩男孩",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 23,
+        "title": "狂潮肆起",
+        "artist": "Z总",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 24,
+        "title": "遺物（剧集《法外風雲》主题曲）",
+        "artist": "许廷铿",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 25,
+        "title": "交给时间斑驳",
+        "artist": "供销社乐队",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 26,
+        "title": "穿波鞋的恶魔",
+        "artist": "洪嘉豪",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 27,
+        "title": "Sexy Minus (feat. 初音ミク & 重音テト)",
+        "artist": "LOL/初音ミク/重音テト",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 28,
+        "title": "大只切的故事",
+        "artist": "圈圈菌",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 29,
+        "title": "Miracle",
+        "artist": "Miracle",
+        "source": "网易云飙升榜"
+      },
+      {
+        "rank": 30,
+        "title": "还痛吗",
+        "artist": "宋雨琦",
+        "source": "网易云飙升榜"
+      }
+    ],
+    "ne_hot": [
+      {
+        "rank": 1,
+        "title": "海屿你",
+        "artist": "马也_Crabbit",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 2,
+        "title": "雨过后的风景",
+        "artist": "Dizzy Dizzo (蔡诗芸)",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 3,
+        "title": "故意没接",
+        "artist": "Double SR",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 4,
+        "title": "一半一半",
+        "artist": "Top Barry/INDEcompany",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 5,
+        "title": "恋人",
+        "artist": "李荣浩",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 6,
+        "title": "于是",
+        "artist": "郑润泽",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 7,
+        "title": "如果呢",
+        "artist": "郑润泽",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 8,
+        "title": "小半",
+        "artist": "陈粒",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 9,
+        "title": "失眠",
+        "artist": "Suki刘舒妤",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 10,
+        "title": "唯一",
+        "artist": "G.E.M.邓紫棋",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 11,
+        "title": "Dear D (亲爱的告诉你)",
+        "artist": "项睿娴",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 12,
+        "title": "别怕变老",
+        "artist": "王以太/艾热 AIR",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 13,
+        "title": "两 难",
+        "artist": "加木",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 14,
+        "title": "嗜好",
+        "artist": "颜人中",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 15,
+        "title": "还是会想你",
+        "artist": "林达浪/h3R3",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 16,
+        "title": "罗生门（Follow）",
+        "artist": "梨冻紧/Wiz_H张子豪",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 17,
+        "title": "失眠了",
+        "artist": "吴琳珂Moske",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 18,
+        "title": "我本将心向明月",
+        "artist": "王朝1982/朱旭BooBoo",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 19,
+        "title": "我怀念的",
+        "artist": "孙燕姿",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 20,
+        "title": "晚安",
+        "artist": "颜人中",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 21,
+        "title": "离开我的依赖",
+        "artist": "王艳薇",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 22,
+        "title": "碎碎念",
+        "artist": "队长",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 23,
+        "title": "把回忆拼好给你",
+        "artist": "王贰浪",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 24,
+        "title": "特别的人",
+        "artist": "方大同",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 25,
+        "title": "爱情讯息",
+        "artist": "郭静",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 26,
+        "title": "天赋",
+        "artist": "唐嫣/罗晋",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 27,
+        "title": "Star Crossing Night (feat. GALI)",
+        "artist": "徐明浩/GALI",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 28,
+        "title": "雨爱",
+        "artist": "杨丞琳",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 29,
+        "title": "小胡同",
+        "artist": "郑润泽",
+        "source": "网易云热歌榜"
+      },
+      {
+        "rank": 30,
+        "title": "左转灯 (1000 Times +1)",
+        "artist": "派伟俊/mac ova seas",
+        "source": "网易云热歌榜"
+      }
+    ],
+    "douyin_hot": [
+      {
+        "rank": 1,
+        "title": "周深献唱挽救计划主题曲",
+        "artist": "",
+        "source": "抖音热歌"
+      },
+      {
+        "rank": 2,
+        "title": "任豪用上了李怀安进行曲",
+        "artist": "",
+        "source": "抖音热歌"
+      },
+      {
+        "rank": 3,
+        "title": "英皇还债 惠英红唱跳画全面发展",
+        "artist": "",
+        "source": "抖音热歌"
+      },
+      {
+        "rank": 4,
+        "title": "周杰伦新歌预告",
+        "artist": "",
+        "source": "抖音热歌"
+      }
+    ]
+  },
+  "multi_chart_hits": [
+    {
+      "title": "Singalongsong",
+      "artist": "方大同",
+      "chart_count": 3,
+      "charts": {
+        "qq_rise": 1,
+        "qq_hot": 28,
+        "ne_rise": 2
+      },
+      "avg_rank": 10.3,
+      "score": 2989.6666666666665
+    },
+    {
+      "title": "我怀念的",
+      "artist": "孙燕姿",
+      "chart_count": 3,
+      "charts": {
+        "apple_cn": 6,
+        "qq_hot": 11,
+        "ne_hot": 19
+      },
+      "avg_rank": 12.0,
+      "score": 2988.0
+    },
+    {
+      "title": "特别的人",
+      "artist": "方大同",
+      "chart_count": 3,
+      "charts": {
+        "apple_cn": 10,
+        "qq_hot": 18,
+        "ne_hot": 24
+      },
+      "avg_rank": 17.3,
+      "score": 2982.6666666666665
+    },
+    {
+      "title": "雨爱",
+      "artist": "杨丞琳",
+      "chart_count": 3,
+      "charts": {
+        "apple_cn": 24,
+        "qq_hot": 9,
+        "ne_hot": 28
+      },
+      "avg_rank": 20.3,
+      "score": 2979.6666666666665
+    },
+    {
+      "title": "雨过后的风景",
+      "artist": "Dizzy Dizzo (蔡诗芸)",
+      "chart_count": 2,
+      "charts": {
+        "qq_hot": 1,
+        "ne_hot": 2
+      },
+      "avg_rank": 1.5,
+      "score": 1998.5
+    },
+    {
+      "title": "故意没接",
+      "artist": "Double SR",
+      "chart_count": 2,
+      "charts": {
+        "ne_rise": 1,
+        "ne_hot": 3
+      },
+      "avg_rank": 2.0,
+      "score": 1998.0
+    },
+    {
+      "title": "Can't Take My Eyes off You",
+      "artist": "Frankie Valli",
+      "chart_count": 2,
+      "charts": {
+        "qq_rise": 2,
+        "ne_rise": 4
+      },
+      "avg_rank": 3.0,
+      "score": 1997.0
+    },
+    {
+      "title": "恋人",
+      "artist": "李荣浩",
+      "chart_count": 2,
+      "charts": {
+        "qq_hot": 2,
+        "ne_hot": 5
+      },
+      "avg_rank": 3.5,
+      "score": 1996.5
+    },
+    {
+      "title": "爱错",
+      "artist": "王力宏",
+      "chart_count": 2,
+      "charts": {
+        "apple_cn": 5,
+        "qq_hot": 4
+      },
+      "avg_rank": 4.5,
+      "score": 1995.5
+    },
+    {
+      "title": "演员",
+      "artist": "薛之谦",
+      "chart_count": 2,
+      "charts": {
+        "qq_rise": 5,
+        "qq_hot": 5
+      },
+      "avg_rank": 5.0,
+      "score": 1995.0
+    }
+  ],
+  "cover_candidates": [
+    {
+      "title": "Singalongsong",
+      "artist": "方大同",
+      "chart_count": 3,
+      "charts": {
+        "qq_rise": 1,
+        "qq_hot": 28,
+        "ne_rise": 2
+      },
+      "avg_rank": 10.3,
+      "score": 2989.6666666666665
+    },
+    {
+      "title": "我怀念的",
+      "artist": "孙燕姿",
+      "chart_count": 3,
+      "charts": {
+        "apple_cn": 6,
+        "qq_hot": 11,
+        "ne_hot": 19
+      },
+      "avg_rank": 12.0,
+      "score": 2988.0
+    },
+    {
+      "title": "特别的人",
+      "artist": "方大同",
+      "chart_count": 3,
+      "charts": {
+        "apple_cn": 10,
+        "qq_hot": 18,
+        "ne_hot": 24
+      },
+      "avg_rank": 17.3,
+      "score": 2982.6666666666665
+    },
+    {
+      "title": "雨爱",
+      "artist": "杨丞琳",
+      "chart_count": 3,
+      "charts": {
+        "apple_cn": 24,
+        "qq_hot": 9,
+        "ne_hot": 28
+      },
+      "avg_rank": 20.3,
+      "score": 2979.6666666666665
+    },
+    {
+      "title": "雨过后的风景",
+      "artist": "Dizzy Dizzo (蔡诗芸)",
+      "chart_count": 2,
+      "charts": {
+        "qq_hot": 1,
+        "ne_hot": 2
+      },
+      "avg_rank": 1.5,
+      "score": 1998.5
+    }
+  ],
+  "topics": [
+    {
+      "word": "从选择伴侣能看出爱自己的程度",
+      "hot": 102210,
+      "category": "情感",
+      "source": "微博话题",
+      "match_score": 4
+    },
+    {
+      "word": "世界偏爱多问一嘴的人",
+      "hot": 88805,
+      "category": "情感",
+      "source": "微博话题",
+      "match_score": 4
+    },
+    {
+      "word": "田曦薇张凌赫 好孕赘婿",
+      "hot": 635159,
+      "category": "剧集",
+      "source": "微博话题",
+      "match_score": 3
+    },
+    {
+      "word": "利他性表达",
+      "hot": 196785,
+      "category": "情感",
+      "source": "微博话题",
+      "match_score": 3
+    },
+    {
+      "word": "谢征吻完眼里不是欲望是恐慌",
+      "hot": 195020,
+      "category": "剧集",
+      "source": "微博话题",
+      "match_score": 3
+    }
+  ],
+  "topics_raw": [
+    {
+      "word": "男二以下 AI演员",
+      "hot": 1180835,
+      "category": "互联网",
+      "source": "微博话题"
+    },
+    {
+      "word": "女子投保两年半后确诊患癌遭拒赔",
+      "hot": 831317,
+      "category": "民生新闻",
+      "source": "微博话题"
+    },
+    {
+      "word": "春暖花开各地文旅持续升温",
+      "hot": 677545,
+      "category": "民生新闻",
+      "source": "微博话题"
+    },
+    {
+      "word": "京东外卖周年请客抢千万金券",
+      "hot": 659743,
+      "category": "",
+      "source": "微博话题"
+    },
+    {
+      "word": "田曦薇张凌赫 好孕赘婿",
+      "hot": 635159,
+      "category": "剧集",
+      "source": "微博话题"
+    },
+    {
+      "word": "小米超强钢获得国家级科技一等奖",
+      "hot": 282088,
+      "category": "汽车",
+      "source": "微博话题"
+    },
+    {
+      "word": "伊朗总统誓言要为拉里贾尼复仇",
+      "hot": 281785,
+      "category": "国际时政",
+      "source": "微博话题"
+    },
+    {
+      "word": "倪妮拥抱曼妮芬",
+      "hot": 270483,
+      "category": "",
+      "source": "微博话题"
+    },
+    {
+      "word": "吉利副总裁回应董明珠换车",
+      "hot": 268794,
+      "category": "汽车",
+      "source": "微博话题"
+    },
+    {
+      "word": "微信能折叠发图了",
+      "hot": 251023,
+      "category": "互联网",
+      "source": "微博话题"
+    },
+    {
+      "word": "毛宁向世界分享中国学生午睡神器",
+      "hot": 201426,
+      "category": "民生新闻",
+      "source": "微博话题"
+    },
+    {
+      "word": "利他性表达",
+      "hot": 196785,
+      "category": "情感",
+      "source": "微博话题"
+    },
+    {
+      "word": "不是私生 是公立医院出生",
+      "hot": 196784,
+      "category": "幽默",
+      "source": "微博话题"
+    },
+    {
+      "word": "英皇还债 惠英红唱跳画全面发展",
+      "hot": 196357,
+      "category": "艺人",
+      "source": "微博话题"
+    },
+    {
+      "word": "今天才知道TFBOYS全称",
+      "hot": 195949,
+      "category": "艺人",
+      "source": "微博话题"
+    },
+    {
+      "word": "iPhone18将首次启用三星相机",
+      "hot": 195429,
+      "category": "数码",
+      "source": "微博话题"
+    },
+    {
+      "word": "瞿颖回应已婚",
+      "hot": 195294,
+      "category": "艺人",
+      "source": "微博话题"
+    },
+    {
+      "word": "谢征吻完眼里不是欲望是恐慌",
+      "hot": 195020,
+      "category": "剧集",
+      "source": "微博话题"
+    },
+    {
+      "word": "库克宣布苹果在华节水550亿升",
+      "hot": 168983,
+      "category": "数码",
+      "source": "微博话题"
+    },
+    {
+      "word": "美军称用多枚5000磅钻地弹打击伊朗",
+      "hot": 164465,
+      "category": "军事",
+      "source": "微博话题"
+    },
+    {
+      "word": "章昊 新男团",
+      "hot": 160183,
+      "category": "艺人",
+      "source": "微博话题"
+    },
+    {
+      "word": "平台回应旅行箱广告将女友装箱引争议",
+      "hot": 153584,
+      "category": "民生新闻",
+      "source": "微博话题"
+    },
+    {
+      "word": "姚晨 侯雯元",
+      "hot": 147928,
+      "category": "艺人",
+      "source": "微博话题"
+    },
+    {
+      "word": "曝小S哭着去陈建州范玮琪家",
+      "hot": 140003,
+      "category": "艺人",
+      "source": "微博话题"
+    },
+    {
+      "word": "男孩被塞后备箱生父拒绝道歉赔偿",
+      "hot": 137870,
+      "category": "民生新闻",
+      "source": "微博话题"
+    },
+    {
+      "word": "瞿颖胡兵回应为什么没在一起",
+      "hot": 137842,
+      "category": "艺人",
+      "source": "微博话题"
+    },
+    {
+      "word": "冯小刚参演流浪地球3",
+      "hot": 137807,
+      "category": "电影",
+      "source": "微博话题"
+    },
+    {
+      "word": "吉利发布舱驾融合关键成果",
+      "hot": 137786,
+      "category": "汽车",
+      "source": "微博话题"
+    },
+    {
+      "word": "刘宇宁 玫瑰再生我考虑一下",
+      "hot": 137718,
+      "category": "艺人",
+      "source": "微博话题"
+    },
+    {
+      "word": "小S街头大哭",
+      "hot": 137710,
+      "category": "艺人",
+      "source": "微博话题"
+    },
+    {
+      "word": "健身房倒闭教练自费上完877节课",
+      "hot": 137634,
+      "category": "民生新闻",
+      "source": "微博话题"
+    },
+    {
+      "word": "一箱12瓶纯净水每瓶都有针眼",
+      "hot": 137618,
+      "category": "民生新闻",
+      "source": "微博话题"
+    },
+    {
+      "word": "张凌赫回应谢征樊长玉圆房吻",
+      "hot": 137590,
+      "category": "剧集",
+      "source": "微博话题"
+    },
+    {
+      "word": "曝去年热播剧男女主恋情",
+      "hot": 122492,
+      "category": "艺人",
+      "source": "微博话题"
+    },
+    {
+      "word": "高市早苗回应不谴责美以言论被批",
+      "hot": 120773,
+      "category": "国际时政",
+      "source": "微博话题"
+    },
+    {
+      "word": "逐玉 秦良玉",
+      "hot": 119848,
+      "category": "剧集",
+      "source": "微博话题"
+    },
+    {
+      "word": "papi酱的热烈欢迎",
+      "hot": 110757,
+      "category": "艺人",
+      "source": "微博话题"
+    },
+    {
+      "word": "微信折叠发图",
+      "hot": 106502,
+      "category": "互联网",
+      "source": "微博话题"
+    },
+    {
+      "word": "周杰伦新歌预告",
+      "hot": 105276,
+      "category": "音乐",
+      "source": "微博话题"
+    },
+    {
+      "word": "伊朗称敌方击中布什尔核电站厂区",
+      "hot": 103055,
+      "category": "国际时政",
+      "source": "微博话题"
+    },
+    {
+      "word": "无人机直闯美军基地",
+      "hot": 102289,
+      "category": "国际时政",
+      "source": "微博话题"
+    },
+    {
+      "word": "研究称父母谁做家务影响孩子欺凌行为",
+      "hot": 102233,
+      "category": "民生新闻",
+      "source": "微博话题"
+    },
+    {
+      "word": "从选择伴侣能看出爱自己的程度",
+      "hot": 102210,
+      "category": "情感",
+      "source": "微博话题"
+    },
+    {
+      "word": "桃晚安 低保",
+      "hot": 101561,
+      "category": "电竞",
+      "source": "微博话题"
+    },
+    {
+      "word": "香蕉真的会灭绝吗",
+      "hot": 92906,
+      "category": "科学科普",
+      "source": "微博话题"
+    },
+    {
+      "word": "拉里贾尼与其子死于以军空袭",
+      "hot": 92820,
+      "category": "国内时政",
+      "source": "微博话题"
+    },
+    {
+      "word": "网传落生去世",
+      "hot": 91903,
+      "category": "网红",
+      "source": "微博话题"
+    },
+    {
+      "word": "papi开辟vintage艺人采访赛道",
+      "hot": 91295,
+      "category": "艺人",
+      "source": "微博话题"
+    },
+    {
+      "word": "Token第一股",
+      "hot": 91161,
+      "category": "财经",
+      "source": "微博话题"
+    },
+    {
+      "word": "世界偏爱多问一嘴的人",
+      "hot": 88805,
+      "category": "情感",
+      "source": "微博话题"
+    },
+    {
+      "word": "多地宣布生物地理不计入中考总分",
+      "hot": 12013132,
+      "label": 3,
+      "source": "抖音热点"
+    },
+    {
+      "word": "夜深忽梦少年事",
+      "hot": 11400667,
+      "label": 1,
+      "source": "抖音热点"
+    },
+    {
+      "word": "中国用激光种地了",
+      "hot": 11173649,
+      "label": 1,
+      "source": "抖音热点"
+    },
+    {
+      "word": "早春基础款漂亮衣服分享",
+      "hot": 10797059,
+      "label": 0,
+      "source": "抖音热点"
+    },
+    {
+      "word": "欧冠切尔西0:3巴黎圣日耳曼",
+      "hot": 8817152,
+      "label": 0,
+      "source": "抖音热点"
+    },
+    {
+      "word": "伊朗最高安全官员拉里贾尼是谁",
+      "hot": 8697568,
+      "label": 1,
+      "source": "抖音热点"
+    },
+    {
+      "word": "官方辟谣“AI安全治理3年计划”",
+      "hot": 8597920,
+      "label": 16,
+      "source": "抖音热点"
+    },
+    {
+      "word": "我要做个齐天大圣",
+      "hot": 7831135,
+      "label": 9,
+      "source": "抖音热点"
+    },
+    {
+      "word": "学会协会多人被查",
+      "hot": 7794112,
+      "label": 0,
+      "source": "抖音热点"
+    },
+    {
+      "word": "最美萌宠锅盖头出现了",
+      "hot": 7774886,
+      "label": 9,
+      "source": "抖音热点"
+    },
+    {
+      "word": "不知不觉春节已经过去一个月了",
+      "hot": 7757625,
+      "label": 3,
+      "source": "抖音热点"
+    },
+    {
+      "word": "逐玉单更剧粉的精神状态",
+      "hot": 7756993,
+      "label": 8,
+      "source": "抖音热点"
+    },
+    {
+      "word": "周杰伦发的什么花",
+      "hot": 7756678,
+      "label": 3,
+      "source": "抖音热点"
+    },
+    {
+      "word": "阿森纳晋级八强",
+      "hot": 7752089,
+      "label": 0,
+      "source": "抖音热点"
+    },
+    {
+      "word": "周也新剧重启人生",
+      "hot": 7750930,
+      "label": 1,
+      "source": "抖音热点"
+    },
+    {
+      "word": "没网的八小时他坦白了一切",
+      "hot": 7749546,
+      "label": 9,
+      "source": "抖音热点"
+    },
+    {
+      "word": "冬去春来定档0322",
+      "hot": 7745009,
+      "label": 1,
+      "source": "抖音热点"
+    },
+    {
+      "word": "眼睛瞎在小猫上",
+      "hot": 7744646,
+      "label": 9,
+      "source": "抖音热点"
+    },
+    {
+      "word": "伊朗总统证实拉里贾尼已遇难",
+      "hot": 7742730,
+      "label": 0,
+      "source": "抖音热点"
+    },
+    {
+      "word": "俄战机携高超音速导弹飞越日本海",
+      "hot": 7739036,
+      "label": 3,
+      "source": "抖音热点"
+    },
+    {
+      "word": "随元青这个手势舞是挨完揍拍的吗",
+      "hot": 7733267,
+      "label": 3,
+      "source": "抖音热点"
+    },
+    {
+      "word": "剪出逐玉里的callback",
+      "hot": 7730297,
+      "label": 11,
+      "source": "抖音热点"
+    },
+    {
+      "word": "唤俊在武汉开上巡演了",
+      "hot": 7729598,
+      "label": 3,
+      "source": "抖音热点"
+    },
+    {
+      "word": "当我挑战学习15小时",
+      "hot": 7727151,
+      "label": 9,
+      "source": "抖音热点"
+    },
+    {
+      "word": "万物皆可逐玉刮痧",
+      "hot": 7723821,
+      "label": 8,
+      "source": "抖音热点"
+    },
+    {
+      "word": "张真源跳了nobatidao",
+      "hot": 7721614,
+      "label": 17,
+      "source": "抖音热点"
+    },
+    {
+      "word": "你好1983首播观后感",
+      "hot": 7708226,
+      "label": 3,
+      "source": "抖音热点"
+    },
+    {
+      "word": "中国女篮战胜巴西",
+      "hot": 7704173,
+      "label": 0,
+      "source": "抖音热点"
+    },
+    {
+      "word": "海来阿木回应送大自然梗",
+      "hot": 7702144,
+      "label": 3,
+      "source": "抖音热点"
+    },
+    {
+      "word": "突然想起20年前追逐梦想的自己",
+      "hot": 7688338,
+      "label": 9,
+      "source": "抖音热点"
+    },
+    {
+      "word": "春天我和你拼了",
+      "hot": 7684554,
+      "label": 3,
+      "source": "抖音热点"
+    },
+    {
+      "word": "等到了朱志鑫的复仇摇",
+      "hot": 7683569,
+      "label": 17,
+      "source": "抖音热点"
+    },
+    {
+      "word": "原来章若楠也是瓦学姐",
+      "hot": 7681784,
+      "label": 3,
+      "source": "抖音热点"
+    },
+    {
+      "word": "花弓箭精准射中我心巴",
+      "hot": 7679243,
+      "label": 3,
+      "source": "抖音热点"
+    },
+    {
+      "word": "宋雨琦BigGuy好辣",
+      "hot": 7678709,
+      "label": 3,
+      "source": "抖音热点"
+    },
+    {
+      "word": "周深献唱挽救计划主题曲",
+      "hot": 7677749,
+      "label": 17,
+      "source": "抖音热点"
+    },
+    {
+      "word": "徐艺洋给黄子韬的“大”礼物",
+      "hot": 7676446,
+      "label": 3,
+      "source": "抖音热点"
+    },
+    {
+      "word": "遮天动画首部剧场版定档",
+      "hot": 7675922,
+      "label": 1,
+      "source": "抖音热点"
+    },
+    {
+      "word": "章子怡亚洲电影大奖幕后vlog",
+      "hot": 7674931,
+      "label": 8,
+      "source": "抖音热点"
+    },
+    {
+      "word": "谁还没有个大鱼梦",
+      "hot": 7673948,
+      "label": 0,
+      "source": "抖音热点"
+    },
+    {
+      "word": "你好1983开播",
+      "hot": 7671368,
+      "label": 5,
+      "source": "抖音热点"
+    },
+    {
+      "word": "无畏契约赛季新通行证全览",
+      "hot": 7668646,
+      "label": 0,
+      "source": "抖音热点"
+    },
+    {
+      "word": "邓凯疑似被齐旻顶号",
+      "hot": 7654595,
+      "label": 11,
+      "source": "抖音热点"
+    },
+    {
+      "word": "夏晓兰好争气",
+      "hot": 7651578,
+      "label": 5,
+      "source": "抖音热点"
+    },
+    {
+      "word": "小巷人家官宣第二部",
+      "hot": 7643732,
+      "label": 0,
+      "source": "抖音热点"
+    },
+    {
+      "word": "看机器人跳一支春天的芭蕾",
+      "hot": 7643228,
+      "label": 0,
+      "source": "抖音热点"
+    },
+    {
+      "word": "她的盛焰母女恨海情天",
+      "hot": 7642272,
+      "label": 0,
+      "source": "抖音热点"
+    },
+    {
+      "word": "卓沅two舞蹈挑战教科书级别",
+      "hot": 7642213,
+      "label": 0,
+      "source": "抖音热点"
+    },
+    {
+      "word": "用方便面写难念的经",
+      "hot": 7639971,
+      "label": 0,
+      "source": "抖音热点"
+    },
+    {
+      "word": "任豪用上了李怀安进行曲",
+      "hot": 7638122,
+      "label": 11,
+      "source": "抖音热点"
+    },
+    {
+      "word": "呷哺呷哺五年亏15亿，平价火锅之王为何被年轻人拉黑？",
+      "hot": "313 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "凉山一单位招人，方圆 10 公里无人居住，这种工作体验会是什么样？如果能考上，你愿意去这个岗吗？",
+      "hot": "142 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "下属总是卡点上下班，工作没完成也不加班，我要的东西也不能及时给，怎么办？",
+      "hot": "121 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "为什么猫咪亲一下可以，很多下就不行？",
+      "hot": "113 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "2526欧冠1/8决赛次回合曼城 1:2 皇家马德里，如何评价这场比赛？",
+      "hot": "105 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "伊朗总统证实拉里贾尼已遇难，这意味着什么？会带来哪些影响？",
+      "hot": "103 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "霍尔木兹海峡封锁持续，石油、天然气流通量下降，哪些地区、国家会先面临断油断气？这些地方现在怎么样了？",
+      "hot": "102 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "既然汉字可以写成草书形式，为什么不把草书字体当成正规汉字符号呢？这样不就像字母一样简化了吗？",
+      "hot": "101 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "媒体称 AI 大厂月薪 3 万元「疯抢」文科生，为何会出现这个现象？AI 时代文科生有哪些优势？",
+      "hot": "100 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "中国农科院院长称「中国粮、中国菜和中国肉都主要用上了中国种」，这意味着什么？「中国种」的含金量有多高？",
+      "hot": "98 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "美以袭击伊朗进入第 19 天，当前局势如何？还有哪些信息值得关注？",
+      "hot": "97 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "周杰伦首支 MV 预告正式公开，你有哪些期待？",
+      "hot": "96 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "中方向伊朗、约旦、黎巴嫩、伊拉克四国提供紧急人道主义援助，对当地有哪些帮助？",
+      "hot": "95 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "拓媒称杨瀚森需要「有球在手」，但在 NBA 鲜有机会，这种打法对他 NBA 前景有何影响？",
+      "hot": "95 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "员工上班晕倒后抢救无效死亡，因救治超 48 小时，人社局不认定工伤，为何工伤认定要设 48 小时时限？",
+      "hot": "94 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "如何看待 2026 EWC 官方因Xiaohai更换战队而取消其《街霸 6》卫冕冠军直邀资格的行为？",
+      "hot": "94 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "大爷每年生日购入 100 克黄金坚持二十年，长期持有分批卖出收益颇丰，如何看待他的投资理念？",
+      "hot": "93 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "马克龙称法国将在霍尔木兹海峡「局势更平静」后参与护航行动，怎样解读这一表态？还有其他国家会参与吗？",
+      "hot": "92 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "为什么英语表达不了汉语中「艮揪」、「Q弹」、「筋道」等高级概念？",
+      "hot": "92 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "蜜雪冰城稳赚不赔吗？开蜜雪冰城能挣钱吗？",
+      "hot": "92 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "《三角洲行动》这款玩法单一的游戏为什么能火这么久？",
+      "hot": "88 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "杭州多地发布购房补贴活动，购买一套房补贴 10 万元消费券，对当地楼市有哪些影响？会有更多地方跟进吗？",
+      "hot": "87 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "迈克尔·B·乔丹凭借《罪人》首提即获封奥斯卡影帝，如何评价他的演技？",
+      "hot": "79 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "阿维塔 06T 搭载的新一代双光路激光雷达，技术上有哪些迭代升级？能解决日常驾驶中的哪些常见痛点？",
+      "hot": "75 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "美国国家反恐中心主任因不满发动对伊朗战争辞职，称伊并未对美构成迫在眉睫的威胁，如何看待此事？",
+      "hot": "73 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "中越建立全球首个「3+3」机制并首次将公安合作纳入对话，此举有何意义？",
+      "hot": "71 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "买断制游戏真的能让我们告别「付费深坑」和「逼肝」吗？",
+      "hot": "67 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "记忆里射箭弓都是竖起来，但很多游戏会使用横握弓射箭的方式，在现实中真的可行吗？两种姿势有什么优缺点？",
+      "hot": "67 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "重庆万州马拉松乌龙事故引争议，冠军选手冲线时被拦停并强行带离赛道，官方称裁判因下雨误判，如何评价？",
+      "hot": "66 万热度",
+      "source": "知乎热榜"
+    },
+    {
+      "word": "初中娃，今天开学第二天就写作业到11点。作为家长你会是什么样的心情，你会选择做点什么呢？",
+      "hot": "64 万热度",
+      "source": "知乎热榜"
+    }
+  ],
+  "douyin_trending": {
+    "热门电视剧": [
+      {
+        "rank": 1,
+        "word": "逐玉",
+        "rate": "",
+        "hot": 19,
+        "category": "热门电视剧",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 2,
+        "word": "正义女神",
+        "rate": "",
+        "hot": 18,
+        "category": "热门电视剧",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 3,
+        "word": "真相捕捉 第三季",
+        "rate": "9.3",
+        "hot": 17,
+        "category": "热门电视剧",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 4,
+        "word": "太平年",
+        "rate": "8.3",
+        "hot": 16,
+        "category": "热门电视剧",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 5,
+        "word": "我的山与海",
+        "rate": "",
+        "hot": 15,
+        "category": "热门电视剧",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 6,
+        "word": "海贼王(真人版) 第二季",
+        "rate": "8.8",
+        "hot": 14,
+        "category": "热门电视剧",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 7,
+        "word": "生命树",
+        "rate": "8.3",
+        "hot": 13,
+        "category": "热门电视剧",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 8,
+        "word": "纯真年代的爱情",
+        "rate": "7.3",
+        "hot": 12,
+        "category": "热门电视剧",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 9,
+        "word": "她的盛焰",
+        "rate": "",
+        "hot": 11,
+        "category": "热门电视剧",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 10,
+        "word": "除恶",
+        "rate": "7.4",
+        "hot": 10,
+        "category": "热门电视剧",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 11,
+        "word": "你好1983",
+        "rate": "",
+        "hot": 9,
+        "category": "热门电视剧",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 12,
+        "word": "权欲之巅",
+        "rate": "",
+        "hot": 8,
+        "category": "热门电视剧",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 13,
+        "word": "在你灿烂的季节",
+        "rate": "8.1",
+        "hot": 7,
+        "category": "热门电视剧",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 14,
+        "word": "莎拉的真伪人生",
+        "rate": "7.6",
+        "hot": 6,
+        "category": "热门电视剧",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 15,
+        "word": "订阅男友",
+        "rate": "7.4",
+        "hot": 5,
+        "category": "热门电视剧",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 16,
+        "word": "喜鹊谋杀案",
+        "rate": "8.4",
+        "hot": 4,
+        "category": "热门电视剧",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 17,
+        "word": "成何体统",
+        "rate": "7.2",
+        "hot": 3,
+        "category": "热门电视剧",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 18,
+        "word": "好好的时光",
+        "rate": "",
+        "hot": 2,
+        "category": "热门电视剧",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 19,
+        "word": "爱情怎么翻译？",
+        "rate": "8.4",
+        "hot": 1,
+        "category": "热门电视剧",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 20,
+        "word": "唐宫奇案之青雾风鸣",
+        "rate": "6.9",
+        "hot": 0,
+        "category": "热门电视剧",
+        "source": "豆瓣"
+      }
+    ],
+    "热门电影": [
+      {
+        "rank": 1,
+        "word": "洛杉矶劫案",
+        "rate": "7.0",
+        "hot": 19,
+        "category": "热门电影",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 2,
+        "word": "至尊马蒂",
+        "rate": "7.3",
+        "hot": 18,
+        "category": "热门电影",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 3,
+        "word": "不被爱也没关系",
+        "rate": "6.7",
+        "hot": 17,
+        "category": "热门电影",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 4,
+        "word": "留存的爱",
+        "rate": "7.2",
+        "hot": 16,
+        "category": "热门电影",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 5,
+        "word": "危情蜻蜓",
+        "rate": "7.1",
+        "hot": 15,
+        "category": "热门电影",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 6,
+        "word": "侵略机器",
+        "rate": "6.4",
+        "hot": 14,
+        "category": "热门电影",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 7,
+        "word": "哈姆奈特",
+        "rate": "7.9",
+        "hot": 13,
+        "category": "热门电影",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 8,
+        "word": "东京出租车",
+        "rate": "7.9",
+        "hot": 12,
+        "category": "热门电影",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 9,
+        "word": "用武之地",
+        "rate": "7.2",
+        "hot": 11,
+        "category": "热门电影",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 10,
+        "word": "家弑服务",
+        "rate": "7.1",
+        "hot": 10,
+        "category": "热门电影",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 11,
+        "word": "你好，爱美丽",
+        "rate": "8.0",
+        "hot": 9,
+        "category": "热门电影",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 12,
+        "word": "庇护之地",
+        "rate": "6.0",
+        "hot": 8,
+        "category": "热门电影",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 13,
+        "word": "你行！你上！",
+        "rate": "6.7",
+        "hot": 7,
+        "category": "热门电影",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 14,
+        "word": "情感价值",
+        "rate": "7.6",
+        "hot": 6,
+        "category": "热门电影",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 15,
+        "word": "罪人",
+        "rate": "7.7",
+        "hot": 5,
+        "category": "热门电影",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 16,
+        "word": "局外人",
+        "rate": "7.2",
+        "hot": 4,
+        "category": "热门电影",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 17,
+        "word": "团战之夜",
+        "rate": "6.8",
+        "hot": 3,
+        "category": "热门电影",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 18,
+        "word": "一战再战",
+        "rate": "8.1",
+        "hot": 2,
+        "category": "热门电影",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 19,
+        "word": "女孩",
+        "rate": "7.2",
+        "hot": 1,
+        "category": "热门电影",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 20,
+        "word": "爱的证明",
+        "rate": "8.1",
+        "hot": 0,
+        "category": "热门电影",
+        "source": "豆瓣"
+      }
+    ],
+    "热门综艺": [
+      {
+        "rank": 1,
+        "word": "现在就出发 第二季",
+        "rate": "8.8",
+        "hot": 19,
+        "category": "热门综艺",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 2,
+        "word": "花儿与少年·丝路季",
+        "rate": "9.3",
+        "hot": 18,
+        "category": "热门综艺",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 3,
+        "word": "粉雄救兵 第九季",
+        "rate": "8.1",
+        "hot": 17,
+        "category": "热门综艺",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 4,
+        "word": "喜剧之王单口季",
+        "rate": "8.2",
+        "hot": 16,
+        "category": "热门综艺",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 5,
+        "word": "再见爱人 第四季",
+        "rate": "6.4",
+        "hot": 15,
+        "category": "热门综艺",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 6,
+        "word": "明星大侦探 第五季",
+        "rate": "8.3",
+        "hot": 14,
+        "category": "热门综艺",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 7,
+        "word": "喜人奇妙夜",
+        "rate": "7.5",
+        "hot": 13,
+        "category": "热门综艺",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 8,
+        "word": "思想验证区域：The Community",
+        "rate": "9.5",
+        "hot": 12,
+        "category": "热门综艺",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 9,
+        "word": "明星大侦探 第一季",
+        "rate": "9.4",
+        "hot": 11,
+        "category": "热门综艺",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 10,
+        "word": "黑白厨师：料理阶级战争 第一季",
+        "rate": "8.7",
+        "hot": 10,
+        "category": "热门综艺",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 11,
+        "word": "克拉克森的农场 第三季",
+        "rate": "9.6",
+        "hot": 9,
+        "category": "热门综艺",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 12,
+        "word": "快乐再出发",
+        "rate": "9.6",
+        "hot": 8,
+        "category": "热门综艺",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 13,
+        "word": "十三邀 第一季",
+        "rate": "8.4",
+        "hot": 7,
+        "category": "热门综艺",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 14,
+        "word": "脱口秀和Ta的朋友们",
+        "rate": "6.8",
+        "hot": 6,
+        "category": "热门综艺",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 15,
+        "word": "极限挑战 第一季",
+        "rate": "9.3",
+        "hot": 5,
+        "category": "热门综艺",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 16,
+        "word": "女子推理社 第一季",
+        "rate": "8.5",
+        "hot": 4,
+        "category": "热门综艺",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 17,
+        "word": "女子推理社 第二季",
+        "rate": "8.9",
+        "hot": 3,
+        "category": "热门综艺",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 18,
+        "word": "一年一度喜剧大赛",
+        "rate": "8.6",
+        "hot": 2,
+        "category": "热门综艺",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 19,
+        "word": "快乐再出发 第二季",
+        "rate": "9.5",
+        "hot": 1,
+        "category": "热门综艺",
+        "source": "豆瓣"
+      },
+      {
+        "rank": 20,
+        "word": "再见爱人 第一季",
+        "rate": "8.9",
+        "hot": 0,
+        "category": "热门综艺",
+        "source": "豆瓣"
+      }
+    ],
+    "热门CP": [
+      {
+        "word": "小巷人家官宣第二部",
+        "hot": 7643732,
+        "label": 0,
+        "source": "抖音热点",
+        "category": "热门CP"
+      },
+      {
+        "word": "曝去年热播剧男女主恋情",
+        "hot": 122492,
+        "category": "热门CP",
+        "source": "微博话题"
+      }
+    ],
+    "热门文案": [
+      {
+        "word": "多地宣布生物地理不计入中考总分",
+        "hot": 12013132,
+        "label": 3,
+        "source": "抖音热点",
+        "category": "热门文案"
+      },
+      {
+        "word": "夜深忽梦少年事",
+        "hot": 11400667,
+        "label": 1,
+        "source": "抖音热点",
+        "category": "热门文案"
+      },
+      {
+        "word": "中国用激光种地了",
+        "hot": 11173649,
+        "label": 1,
+        "source": "抖音热点",
+        "category": "热门文案"
+      },
+      {
+        "word": "早春基础款漂亮衣服分享",
+        "hot": 10797059,
+        "label": 0,
+        "source": "抖音热点",
+        "category": "热门文案"
+      },
+      {
+        "word": "欧冠切尔西0:3巴黎圣日耳曼",
+        "hot": 8817152,
+        "label": 0,
+        "source": "抖音热点",
+        "category": "热门文案"
+      },
+      {
+        "word": "伊朗最高安全官员拉里贾尼是谁",
+        "hot": 8697568,
+        "label": 1,
+        "source": "抖音热点",
+        "category": "热门文案"
+      },
+      {
+        "word": "我要做个齐天大圣",
+        "hot": 7831135,
+        "label": 9,
+        "source": "抖音热点",
+        "category": "热门文案"
+      },
+      {
+        "word": "学会协会多人被查",
+        "hot": 7794112,
+        "label": 0,
+        "source": "抖音热点",
+        "category": "热门文案"
+      },
+      {
+        "word": "最美萌宠锅盖头出现了",
+        "hot": 7774886,
+        "label": 9,
+        "source": "抖音热点",
+        "category": "热门文案"
+      },
+      {
+        "word": "不知不觉春节已经过去一个月了",
+        "hot": 7757625,
+        "label": 3,
+        "source": "抖音热点",
+        "category": "热门文案"
+      },
+      {
+        "word": "逐玉单更剧粉的精神状态",
+        "hot": 7756993,
+        "label": 8,
+        "source": "抖音热点",
+        "category": "热门文案"
+      },
+      {
+        "word": "周杰伦发的什么花",
+        "hot": 7756678,
+        "label": 3,
+        "source": "抖音热点",
+        "category": "热门文案"
+      },
+      {
+        "word": "阿森纳晋级八强",
+        "hot": 7752089,
+        "label": 0,
+        "source": "抖音热点",
+        "category": "热门文案"
+      },
+      {
+        "word": "周也新剧重启人生",
+        "hot": 7750930,
+        "label": 1,
+        "source": "抖音热点",
+        "category": "热门文案"
+      },
+      {
+        "word": "没网的八小时他坦白了一切",
+        "hot": 7749546,
+        "label": 9,
+        "source": "抖音热点",
+        "category": "热门文案"
+      },
+      {
+        "word": "冬去春来定档0322",
+        "hot": 7745009,
+        "label": 1,
+        "source": "抖音热点",
+        "category": "热门文案"
+      },
+      {
+        "word": "眼睛瞎在小猫上",
+        "hot": 7744646,
+        "label": 9,
+        "source": "抖音热点",
+        "category": "热门文案"
+      },
+      {
+        "word": "伊朗总统证实拉里贾尼已遇难",
+        "hot": 7742730,
+        "label": 0,
+        "source": "抖音热点",
+        "category": "热门文案"
+      },
+      {
+        "word": "俄战机携高超音速导弹飞越日本海",
+        "hot": 7739036,
+        "label": 3,
+        "source": "抖音热点",
+        "category": "热门文案"
+      },
+      {
+        "word": "随元青这个手势舞是挨完揍拍的吗",
+        "hot": 7733267,
+        "label": 3,
+        "source": "抖音热点",
+        "category": "热门文案"
+      }
+    ],
+    "热门歌曲": [
+      {
+        "word": "周深献唱挽救计划主题曲",
+        "hot": 7677749,
+        "label": 17,
+        "source": "抖音热点",
+        "category": "热门歌曲"
+      },
+      {
+        "word": "任豪用上了李怀安进行曲",
+        "hot": 7638122,
+        "label": 11,
+        "source": "抖音热点",
+        "category": "热门歌曲"
+      },
+      {
+        "word": "英皇还债 惠英红唱跳画全面发展",
+        "hot": 196357,
+        "category": "热门歌曲",
+        "source": "微博话题"
+      },
+      {
+        "word": "周杰伦新歌预告",
+        "hot": 105276,
+        "category": "热门歌曲",
+        "source": "微博话题"
+      }
+    ]
+  }
+}
