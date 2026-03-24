@@ -11,6 +11,7 @@ import sys
 import tempfile
 import time
 from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor
 
 # ── 项目路径 ──
 PROJECT_DIR = Path(__file__).resolve().parent
@@ -30,8 +31,13 @@ def init_session():
     defaults = {
         "suno_cookie": "",
         "gemini_key": "",
+        "anthropic_key": "",
         "ark_key": "",
         "keys_configured": False,
+        "lyrics_claude": "",
+        "lyrics_gemini": "",
+        "lyrics_final": "",
+        "lyrics_generated": False,
     }
     for k, v in defaults.items():
         if k not in st.session_state:
@@ -97,6 +103,96 @@ def get_output_dir():
     # Streamlit Cloud 没有桌面，用临时目录
     tmp = Path(tempfile.mkdtemp(prefix="songmaker_"))
     return str(tmp)
+
+
+# ═══════════════════════════════════════════
+#  AI 写词引擎（Gemini + Claude 双模型比稿）
+# ═══════════════════════════════════════════
+
+LYRICS_PROMPT_TEMPLATE = """你是一位顶尖华语流行音乐词作者。
+
+## 任务
+创作一首原创歌词。
+
+## 基本信息
+- 主题/灵感: {inspiration}
+- 情感基调: {mood}
+- 曲风: {genre}
+- 声线: {vocal}
+- BPM: {bpm}
+- 语言: 中英混搭
+
+## 歌词标准（硬性要求）
+1. 禁止照搬任何现有歌词，必须100%原创
+2. 用意象写感情，禁止直述情绪（❌我很孤独 → ✅窗外的麻雀在电线杆上多嘴）
+3. 每首歌一个情绪切面，不要贪多
+4. 副歌高音位用开口韵母：-a, -ai, -ao, -ang
+5. 押韵是硬性要求，每段韵脚统一
+6. 用 [Verse] [Chorus] [Bridge] 等标签分段
+7. 每行7-11字，Verse 3-4行/段，Chorus 4-6行
+8. 禁止大白话/流水账，每句必须有意象转化
+9. 禁止励志口号/库存套话/万能情感词堆砌
+10. Chorus 核心句要有传唱记忆点
+11. 有画面有行为，口语化年轻化，无书面腔/古风腔
+12. 中英混搭加分（适当位置用有实际含义的英文短句）
+13. 多音字标注拼音（如：觉jiao4）
+14. 控制总时长 150-180秒
+
+## Suno Style Prompt（同时输出）
+按公式输出：[流派+情绪] + [主导乐器] + [人声特质] + [节奏与动态]
+严格不超过200字符。
+
+## 输出格式
+1. 完整歌词（带段落标签 [Verse 1] [Chorus] 等）
+2. Suno Style Prompt
+3. 押韵方案说明（每段用什么韵）
+4. 一句话创作思路
+"""
+
+
+def generate_lyrics_gemini(inspiration, mood, genre, vocal, bpm):
+    """调用 Gemini 写歌词"""
+    try:
+        from google import genai
+        client = genai.Client(api_key=st.session_state["gemini_key"])
+        prompt = LYRICS_PROMPT_TEMPLATE.format(
+            inspiration=inspiration, mood=mood, genre=genre, vocal=vocal, bpm=bpm
+        )
+        response = client.models.generate_content(
+            model="gemini-2.5-flash-preview-05-20",
+            contents=prompt,
+        )
+        return response.text
+    except Exception as e:
+        return f"Gemini 写词失败: {e}"
+
+
+def generate_lyrics_claude(inspiration, mood, genre, vocal, bpm):
+    """调用 Claude 写歌词"""
+    try:
+        import anthropic
+        client = anthropic.Anthropic(api_key=st.session_state["anthropic_key"])
+        prompt = LYRICS_PROMPT_TEMPLATE.format(
+            inspiration=inspiration, mood=mood, genre=genre, vocal=vocal, bpm=bpm
+        )
+        response = client.messages.create(
+            model="claude-sonnet-4-20250514",
+            max_tokens=4096,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        return response.content[0].text
+    except Exception as e:
+        return f"Claude 写词失败: {e}"
+
+
+def can_generate_lyrics():
+    """检查是否至少有一个写词模型可用"""
+    return bool(st.session_state.get("gemini_key") or st.session_state.get("anthropic_key"))
+
+
+def can_dual_generate():
+    """检查是否两个写词模型都可用（比稿模式）"""
+    return bool(st.session_state.get("gemini_key") and st.session_state.get("anthropic_key"))
 
 
 # ═══════════════════════════════════════════
@@ -205,6 +301,36 @@ if page == "⚙️ 设置":
 
     st.markdown("---")
 
+    # ── Anthropic API Key ──
+    st.subheader("🤖 Claude API Key（写歌词用，推荐配置）")
+
+    with st.expander("📖 怎么获取 Claude API Key？"):
+        st.markdown("""
+1. 打开 **console.anthropic.com**（Anthropic 控制台）
+2. 注册或登录你的账号
+3. 点左侧「**API Keys**」
+4. 点「**Create Key**」，给它起个名字（比如"做歌"）
+5. 复制生成的 Key（以 `sk-ant-` 开头）
+6. 粘贴到下面
+
+> 💡 Claude 用来写歌词（和 Gemini 各写一版，然后选最好的）。
+> 如果只配了一个模型，也能用，只是不能比稿。两个都配效果最好。
+        """)
+
+    anthropic_input = st.text_input(
+        "粘贴你的 Claude API Key",
+        value=st.session_state.get("anthropic_key", ""),
+        type="password",
+        placeholder="以 sk-ant- 开头...",
+        key="anthropic_key_input",
+    )
+
+    if st.button("保存 Claude Key"):
+        st.session_state["anthropic_key"] = anthropic_input.strip()
+        st.success("Claude Key 已保存！")
+
+    st.markdown("---")
+
     # ── 豆包 API Key ──
     st.subheader("🎨 豆包 API Key（生成封面图，可选）")
 
@@ -239,6 +365,7 @@ if page == "⚙️ 设置":
     checks = [
         ("Suno Cookie", is_suno_ready(), "做歌必须"),
         ("Gemini API", bool(st.session_state.get("gemini_key")), "写歌词用，推荐"),
+        ("Claude API", bool(st.session_state.get("anthropic_key")), "写歌词用，推荐（两个都配可比稿）"),
         ("豆包 API", bool(st.session_state.get("ark_key")), "封面图，可选"),
     ]
 
@@ -285,7 +412,7 @@ elif page == "🎵 写一首歌":
             height=120,
         )
         lyrics_input = ""
-        ref_audio = None
+        ref_audio = st.file_uploader("上传参考曲（推荐，AI 会参考它的旋律）", type=["mp3", "wav", "m4a"])
 
     elif mode == "📝 我已经写好歌词了":
         inspiration = ""
@@ -368,7 +495,101 @@ elif page == "🎵 写一首歌":
 
     st.markdown("---")
 
-    # ── 开始生成 ──
+    # ═══════════════════════════════════════════
+    #  第一步：AI 写歌词（灵感模式专属）
+    # ═══════════════════════════════════════════
+    if mode == "💡 我有一个灵感/想法" and not lyrics_input:
+        if can_generate_lyrics():
+            st.subheader("第 1 步：AI 写歌词")
+
+            if can_dual_generate():
+                st.caption("Gemini + Claude 各写一版，你来挑最好的")
+            elif st.session_state.get("gemini_key"):
+                st.caption("使用 Gemini 写歌词（配上 Claude API Key 可以比稿）")
+            else:
+                st.caption("使用 Claude 写歌词（配上 Gemini API Key 可以比稿）")
+
+            if st.button("✍️ AI 写歌词", type="secondary", use_container_width=True):
+                if not inspiration:
+                    st.error("请先填写你的灵感/想法")
+                    st.stop()
+
+                with st.spinner("AI 正在写歌词，请稍等..."):
+                    has_gemini = bool(st.session_state.get("gemini_key"))
+                    has_claude = bool(st.session_state.get("anthropic_key"))
+
+                    if has_gemini and has_claude:
+                        # 双模型并行写词
+                        with ThreadPoolExecutor(max_workers=2) as executor:
+                            future_g = executor.submit(
+                                generate_lyrics_gemini, inspiration, mood_clean, genre_clean, vocal_clean, bpm
+                            )
+                            future_c = executor.submit(
+                                generate_lyrics_claude, inspiration, mood_clean, genre_clean, vocal_clean, bpm
+                            )
+                            st.session_state["lyrics_gemini"] = future_g.result()
+                            st.session_state["lyrics_claude"] = future_c.result()
+                    elif has_gemini:
+                        st.session_state["lyrics_gemini"] = generate_lyrics_gemini(
+                            inspiration, mood_clean, genre_clean, vocal_clean, bpm
+                        )
+                        st.session_state["lyrics_claude"] = ""
+                    else:
+                        st.session_state["lyrics_claude"] = generate_lyrics_claude(
+                            inspiration, mood_clean, genre_clean, vocal_clean, bpm
+                        )
+                        st.session_state["lyrics_gemini"] = ""
+
+                    st.session_state["lyrics_generated"] = True
+                st.rerun()
+
+            # 显示写词结果
+            if st.session_state.get("lyrics_generated"):
+                has_both = st.session_state.get("lyrics_gemini") and st.session_state.get("lyrics_claude")
+
+                if has_both:
+                    st.markdown("### 两版歌词对比")
+                    col_g, col_c = st.columns(2)
+                    with col_g:
+                        st.markdown("**Gemini 版**")
+                        st.text_area("Gemini 歌词", value=st.session_state["lyrics_gemini"],
+                                    height=400, key="display_gemini", disabled=True)
+                    with col_c:
+                        st.markdown("**Claude 版**")
+                        st.text_area("Claude 歌词", value=st.session_state["lyrics_claude"],
+                                    height=400, key="display_claude", disabled=True)
+
+                    pick = st.radio("选哪个版本？", ["用 Gemini 版", "用 Claude 版", "自己改（复制到下面编辑）"],
+                                   horizontal=True)
+                    if pick == "用 Gemini 版":
+                        st.session_state["lyrics_final"] = st.session_state["lyrics_gemini"]
+                    elif pick == "用 Claude 版":
+                        st.session_state["lyrics_final"] = st.session_state["lyrics_claude"]
+                else:
+                    single = st.session_state.get("lyrics_gemini") or st.session_state.get("lyrics_claude") or ""
+                    st.markdown("### AI 写的歌词")
+                    st.text_area("AI 歌词", value=single, height=400, key="display_single", disabled=True)
+                    st.session_state["lyrics_final"] = single
+
+                # 可编辑的最终歌词
+                st.markdown("### 最终歌词（可编辑）")
+                lyrics_input = st.text_area(
+                    "编辑歌词后，点下面的按钮提交做歌",
+                    value=st.session_state.get("lyrics_final", ""),
+                    height=300,
+                    key="final_lyrics_edit",
+                )
+
+                st.markdown("---")
+        else:
+            st.info("💡 要让 AI 帮你写歌词，请在「⚙️ 设置」页面配置 Gemini 和/或 Claude API Key。")
+            st.info("你也可以直接切到「📝 我已经写好歌词了」模式，粘贴自己的歌词。")
+
+    # ═══════════════════════════════════════════
+    #  第二步：提交 Suno 做歌
+    # ═══════════════════════════════════════════
+    st.subheader("第 2 步：提交做歌" if mode == "💡 我有一个灵感/想法" and can_generate_lyrics() else "")
+
     if st.button("🚀 开始做歌", type="primary", use_container_width=True):
         if not inspiration and not lyrics_input and not ref_audio:
             st.error("请至少填写一个灵感、歌词或上传参考曲")
@@ -384,7 +605,7 @@ elif page == "🎵 写一首歌":
             ref_path = os.path.join(output_dir, f"ref_{ref_audio.name}")
             with open(ref_path, "wb") as f:
                 f.write(ref_audio.read())
-            status.success(f"参考曲已保存")
+            status.success("参考曲已保存")
 
         # 确定调用模式
         args = []
@@ -403,16 +624,14 @@ elif page == "🎵 写一首歌":
                     "--title", title or "未命名",
                     "--out", output_dir]
         elif lyrics_input:
+            st.warning("没有参考曲，Suno 会自行生成旋律。建议上传一首风格类似的歌作为参考，效果更好。")
             args = ["inspo",
-                "--audio", "",  # inspo requires audio
                 "--description", style_prompt,
                 "--title", title or "未命名",
                 "--lyrics", lyrics_input,
                 "--out", output_dir]
         else:
-            # 纯灵感模式
-            st.warning("纯灵感模式需要上传一首参考曲。请找一首风格相似的歌上传，AI 会参考它的旋律来创作。")
-            st.info(f"你的灵感：{inspiration}\n\n建议：找一首你觉得「感觉像」的歌上传作为参考曲。")
+            st.error("请先让 AI 写歌词，或者自己填写歌词，或者上传参考曲。")
             st.stop()
 
         # 调用 Suno
@@ -422,7 +641,6 @@ elif page == "🎵 写一首歌":
             progress.empty()
             st.success("做歌完成！🎉")
             st.text(stdout)
-            # 列出生成的文件，提供下载
             output_files = [f for f in os.listdir(output_dir)
                           if f.endswith((".wav", ".mp3")) and not f.startswith("ref_")]
             if output_files:
