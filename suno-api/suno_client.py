@@ -555,7 +555,7 @@ def main():
 
         print(f"[inspo] 提交生成，description={args.description[:50]}...")
         ids = client.inspo_generate(
-            upload_id=upload_id,
+            clip_id=upload_id,
             description=args.description,
             title=args.title,
             lyrics=args.lyrics,
