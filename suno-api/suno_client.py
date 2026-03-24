@@ -505,7 +505,7 @@ def main():
 
     # ── inspo（cover-inspo） ──────────────────────────────────────────────────
     p_inspo = sub.add_parser("inspo", help="cover-inspo：以参考曲为灵感，生成全新歌曲")
-    p_inspo.add_argument("--audio",       required=True, help="本地音频路径（mp3/wav）")
+    p_inspo.add_argument("--audio",       default="", help="本地音频路径（mp3/wav，可选）")
     p_inspo.add_argument("--description", required=True, help="风格描述（gpt_description_prompt字段）")
     p_inspo.add_argument("--title",       required=True, help="歌曲名")
     p_inspo.add_argument("--lyrics",      default="",    help="歌词（留空则Suno自动生成）")
@@ -550,16 +550,25 @@ def main():
 
     # ── inspo ─────────────────────────────────────────────────────────────────
     elif args.cmd == "inspo":
-        print(f"[inspo] 上传音频: {args.audio}")
-        upload_id = client.upload_audio(args.audio)
-
-        print(f"[inspo] 提交生成，description={args.description[:50]}...")
-        ids = client.inspo_generate(
-            clip_id=upload_id,
-            description=args.description,
-            title=args.title,
-            lyrics=args.lyrics,
-        )
+        if args.audio:
+            # 有参考曲：上传后用 cover_remix（支持 upload_id + 自定义歌词）
+            print(f"[inspo] 上传参考曲: {args.audio}")
+            upload_id = client.upload_audio(args.audio)
+            print(f"[inspo] 以参考曲为基础，用 cover_remix 生成...")
+            ids = client.cover_remix(
+                upload_id=upload_id,
+                style=args.description,
+                title=args.title,
+                lyrics=args.lyrics,
+            )
+        else:
+            # 无参考曲：纯歌词+风格，用 custom_generate 从零生成
+            print(f"[inspo] 无参考曲，用 custom_generate 从零生成...")
+            ids = client.custom_generate(
+                lyrics=args.lyrics,
+                style=args.description,
+                title=args.title,
+            )
         print(f"[inspo] clip_ids={ids}，等待完成...")
         clips = client.wait_for_clips(ids, timeout=args.timeout)
         print(f"[inspo] 完成 {len(clips)} 个 clip")

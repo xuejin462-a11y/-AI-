@@ -624,7 +624,7 @@ elif page == "🎵 写一首歌":
                     "--title", title or "未命名",
                     "--out", output_dir]
         elif lyrics_input:
-            st.warning("没有参考曲，Suno 会自行生成旋律。建议上传一首风格类似的歌作为参考，效果更好。")
+            st.info("没有参考曲，Suno 会从零生成旋律。上传参考曲效果更好，但不上传也能用。")
             args = ["inspo",
                 "--description", style_prompt,
                 "--title", title or "未命名",
