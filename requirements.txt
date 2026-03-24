@@ -4,3 +4,4 @@ Pillow
 librosa
 google-genai
 anthropic
+yt-dlp

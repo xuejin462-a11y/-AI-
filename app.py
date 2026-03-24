@@ -38,6 +38,7 @@ def init_session():
         "lyrics_gemini": "",
         "lyrics_final": "",
         "lyrics_generated": False,
+        "searched_ref_path": "",
     }
     for k, v in defaults.items():
         if k not in st.session_state:
@@ -103,6 +104,85 @@ def get_output_dir():
     # Streamlit Cloud 没有桌面，用临时目录
     tmp = Path(tempfile.mkdtemp(prefix="songmaker_"))
     return str(tmp)
+
+
+# ═══════════════════════════════════════════
+#  参考曲搜索下载（yt-dlp）
+# ═══════════════════════════════════════════
+
+def search_and_download_song(query, output_dir):
+    """按歌名从 YouTube 搜索并下载音频，返回文件路径"""
+    try:
+        import yt_dlp
+    except ImportError:
+        return None, "yt-dlp 未安装，请直接上传音频文件"
+
+    os.makedirs(output_dir, exist_ok=True)
+    output_template = os.path.join(output_dir, "ref_%(title).50s.%(ext)s")
+
+    ydl_opts = {
+        "format": "bestaudio/best",
+        "postprocessors": [{
+            "key": "FFmpegExtractAudio",
+            "preferredcodec": "mp3",
+            "preferredquality": "192",
+        }],
+        "outtmpl": output_template,
+        "default_search": "ytsearch1",  # 只取第一个结果
+        "quiet": True,
+        "no_warnings": True,
+        "socket_timeout": 30,
+    }
+
+    try:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            info = ydl.extract_info(query, download=True)
+            if "entries" in info:
+                info = info["entries"][0]
+            # 找到下载的文件
+            title = info.get("title", "unknown")
+            # yt-dlp 下载后文件名可能被截断，搜索目录中最新的 mp3
+            mp3_files = sorted(
+                [f for f in os.listdir(output_dir) if f.startswith("ref_") and f.endswith(".mp3")],
+                key=lambda f: os.path.getmtime(os.path.join(output_dir, f)),
+                reverse=True,
+            )
+            if mp3_files:
+                return os.path.join(output_dir, mp3_files[0]), title
+            return None, f"下载完成但找不到文件"
+    except Exception as e:
+        return None, f"搜索/下载失败: {e}"
+
+
+def show_suno_fallback(lyrics, style_prompt, title):
+    """Cookie 过期时的降级方案：展示可复制内容 + 操作指引"""
+    st.error("Suno Cookie 已过期，无法自动生成。请手动操作：")
+
+    st.markdown("### 手动做歌步骤")
+    st.markdown("""
+1. 点击下方按钮打开 Suno 创作页面
+2. 在 Suno 页面选择「**Custom**」模式
+3. 把下面的内容逐项复制粘贴进去
+4. 点击 Suno 的「**Create**」按钮
+5. 做完后记得更新你的 Cookie（去「⚙️ 设置」页面）
+    """)
+
+    st.link_button("🔗 打开 Suno 创作页面", "https://suno.com/create", type="primary")
+
+    st.markdown("---")
+
+    # Style Prompt — 一键复制
+    st.markdown("**Style Prompt**（粘贴到 Suno 的「Style of Music」框）")
+    st.code(style_prompt, language=None)
+
+    # 歌词 — 一键复制
+    if lyrics:
+        st.markdown("**歌词**（粘贴到 Suno 的「Lyrics」框）")
+        st.code(lyrics, language=None)
+
+    # 歌名
+    if title:
+        st.markdown(f"**歌名**（填到 Suno 的「Title」框）：`{title}`")
 
 
 # ═══════════════════════════════════════════
@@ -412,7 +492,24 @@ elif page == "🎵 写一首歌":
             height=120,
         )
         lyrics_input = ""
-        ref_audio = st.file_uploader("上传参考曲（推荐，AI 会参考它的旋律）", type=["mp3", "wav", "m4a"])
+
+        # 参考曲：上传或搜索
+        ref_method = st.radio("参考曲", ["📁 上传文件", "🔍 输入歌名搜索"], horizontal=True, key="ref1")
+        if ref_method == "📁 上传文件":
+            ref_audio = st.file_uploader("上传参考曲（推荐）", type=["mp3", "wav", "m4a"], key="upload1")
+        else:
+            ref_audio = None
+            song_query = st.text_input("输入歌名（如：周杰伦 晴天）", key="search1",
+                                       placeholder="歌手名 + 歌名，或粘贴 YouTube 链接")
+            if song_query and st.button("🔍 搜索并下载", key="btn_search1"):
+                with st.spinner(f"正在搜索「{song_query}」..."):
+                    path, info = search_and_download_song(song_query, get_output_dir())
+                if path:
+                    st.success(f"找到：{info}")
+                    st.audio(path)
+                    st.session_state["searched_ref_path"] = path
+                else:
+                    st.error(info)
 
     elif mode == "📝 我已经写好歌词了":
         inspiration = ""
@@ -421,7 +518,22 @@ elif page == "🎵 写一首歌":
             placeholder="[Verse 1]\n第一段歌词...\n\n[Chorus]\n副歌歌词...",
             height=200,
         )
-        ref_audio = st.file_uploader("上传参考曲（可选，AI 会参考它的旋律）", type=["mp3", "wav", "m4a"])
+        ref_method = st.radio("参考曲（可选）", ["📁 上传文件", "🔍 输入歌名搜索"], horizontal=True, key="ref2")
+        if ref_method == "📁 上传文件":
+            ref_audio = st.file_uploader("上传参考曲", type=["mp3", "wav", "m4a"], key="upload2")
+        else:
+            ref_audio = None
+            song_query = st.text_input("输入歌名", key="search2",
+                                       placeholder="歌手名 + 歌名，或粘贴 YouTube 链接")
+            if song_query and st.button("🔍 搜索并下载", key="btn_search2"):
+                with st.spinner(f"正在搜索「{song_query}」..."):
+                    path, info = search_and_download_song(song_query, get_output_dir())
+                if path:
+                    st.success(f"找到：{info}")
+                    st.audio(path)
+                    st.session_state["searched_ref_path"] = path
+                else:
+                    st.error(info)
 
     else:  # 有参考曲
         inspiration = st.text_area(
@@ -434,7 +546,22 @@ elif page == "🎵 写一首歌":
             placeholder="留空则由 AI 自动生成歌词",
             height=120,
         )
-        ref_audio = st.file_uploader("上传参考曲", type=["mp3", "wav", "m4a"])
+        ref_method = st.radio("参考曲", ["📁 上传文件", "🔍 输入歌名搜索"], horizontal=True, key="ref3")
+        if ref_method == "📁 上传文件":
+            ref_audio = st.file_uploader("上传参考曲", type=["mp3", "wav", "m4a"], key="upload3")
+        else:
+            ref_audio = None
+            song_query = st.text_input("输入歌名", key="search3",
+                                       placeholder="歌手名 + 歌名，或粘贴 YouTube 链接")
+            if song_query and st.button("🔍 搜索并下载", key="btn_search3"):
+                with st.spinner(f"正在搜索「{song_query}」..."):
+                    path, info = search_and_download_song(song_query, get_output_dir())
+                if path:
+                    st.success(f"找到：{info}")
+                    st.audio(path)
+                    st.session_state["searched_ref_path"] = path
+                else:
+                    st.error(info)
 
     st.markdown("---")
 
@@ -591,21 +718,25 @@ elif page == "🎵 写一首歌":
     st.subheader("第 2 步：提交做歌" if mode == "💡 我有一个灵感/想法" and can_generate_lyrics() else "")
 
     if st.button("🚀 开始做歌", type="primary", use_container_width=True):
-        if not inspiration and not lyrics_input and not ref_audio:
-            st.error("请至少填写一个灵感、歌词或上传参考曲")
+        has_searched_ref = bool(st.session_state.get("searched_ref_path"))
+        if not inspiration and not lyrics_input and not ref_audio and not has_searched_ref:
+            st.error("请至少填写一个灵感、歌词或上传/搜索参考曲")
             st.stop()
 
         output_dir = get_output_dir()
         progress = st.empty()
         status = st.empty()
 
-        # 保存上传的参考曲
+        # 参考曲路径：上传的 > 搜索下载的
         ref_path = None
         if ref_audio:
             ref_path = os.path.join(output_dir, f"ref_{ref_audio.name}")
             with open(ref_path, "wb") as f:
                 f.write(ref_audio.read())
             status.success("参考曲已保存")
+        elif has_searched_ref:
+            ref_path = st.session_state["searched_ref_path"]
+            status.success(f"使用搜索到的参考曲")
 
         # 确定调用模式
         args = []
@@ -631,7 +762,7 @@ elif page == "🎵 写一首歌":
                 "--lyrics", lyrics_input,
                 "--out", output_dir]
         else:
-            st.error("请先让 AI 写歌词，或者自己填写歌词，或者上传参考曲。")
+            st.error("请先让 AI 写歌词，或者自己填写歌词，或者上传/搜索参考曲。")
             st.stop()
 
         # 调用 Suno
@@ -657,10 +788,12 @@ elif page == "🎵 写一首歌":
                         )
         else:
             progress.empty()
-            st.error("生成失败")
+            # Cookie 过期 → 降级为手动模式
             if "422" in stderr or "Token validation" in stderr:
-                st.warning("可能是 Suno Cookie 过期了。请去 suno.com 重新获取 Cookie，然后在「⚙️ 设置」页面更新。")
-            st.text(f"错误信息:\n{stderr}\n\n输出:\n{stdout}")
+                show_suno_fallback(lyrics_input, style_prompt, title)
+            else:
+                st.error("生成失败")
+                st.text(f"错误信息:\n{stderr}\n\n输出:\n{stdout}")
 
 
 # ═══════════════════════════════════════════
@@ -752,10 +885,11 @@ elif page == "🔄 二创翻唱":
                         mime="audio/wav",
                     )
         else:
-            st.error("生成失败")
             if "422" in stderr or "Token validation" in stderr:
-                st.warning("可能是 Suno Cookie 过期了。请重新获取后在「⚙️ 设置」页面更新。")
-            st.text(f"错误信息:\n{stderr}")
+                show_suno_fallback("", style, title)
+            else:
+                st.error("生成失败")
+                st.text(f"错误信息:\n{stderr}")
 
 
 # ═══════════════════════════════════════════
