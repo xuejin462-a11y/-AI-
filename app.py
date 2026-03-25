@@ -18,13 +18,18 @@ from pathlib import Path
 # ── 项目路径 ──
 PROJECT_DIR = Path(__file__).resolve().parent
 SUNO_CLIENT = PROJECT_DIR / "suno-api" / "suno_client.py"
-VIDEO_SCRIPT = PROJECT_DIR / "daily-video" / "gen_video_v2.py"
 
-# ── 浏览器端 AI 网关组件 ──
-_browser_ai_component = st_components.declare_component(
-    "browser_ai",
-    path=str(PROJECT_DIR / "components" / "browser_ai"),
-)
+# ── 浏览器端 AI 网关组件（懒加载，只在需要时初始化）──
+_browser_ai_component = None
+
+def _get_browser_ai():
+    global _browser_ai_component
+    if _browser_ai_component is None:
+        _browser_ai_component = st_components.declare_component(
+            "browser_ai",
+            path=str(PROJECT_DIR / "components" / "browser_ai"),
+        )
+    return _browser_ai_component
 
 # ── 页面配置 ──
 st.set_page_config(page_title="AI 做歌系统", page_icon="🎵", layout="wide")
@@ -38,9 +43,6 @@ def init_session():
     """初始化 session_state 默认值"""
     defaults = {
         "suno_cookie": "",
-        "gemini_key": "",
-        "anthropic_key": "",
-        "ark_key": "",
         "keys_configured": False,
         "lyrics_claude": "",
         "lyrics_gemini": "",
@@ -80,10 +82,6 @@ def run_suno_cmd(args, progress_placeholder=None):
     # 构建干净的环境变量（不污染其他用户的会话）
     env = os.environ.copy()
     env["SUNO_COOKIE"] = f"__client={token}"
-    if st.session_state.get("gemini_key"):
-        env["GEMINI_API_KEY"] = st.session_state["gemini_key"]
-    if st.session_state.get("ark_key"):
-        env["ARK_API_KEY"] = st.session_state["ark_key"]
 
     if progress_placeholder:
         progress_placeholder.info("正在调用 Suno API，请耐心等待（通常需要 2-5 分钟）...")
@@ -356,7 +354,8 @@ def render_browser_ai(model, prompt, max_tokens=4096, component_key="default"):
     API 请求从用户浏览器（中国 IP）发出，绕过服务器 IP 限制。
     返回: dict{"content":..., "status":"ok"} | dict{"error":..., "status":"error"} | None（等待中）
     """
-    return _browser_ai_component(
+    component = _get_browser_ai()
+    return component(
         model=model,
         prompt=prompt,
         max_tokens=max_tokens,
@@ -403,7 +402,7 @@ else:
 
 page = st.sidebar.radio(
     "选择功能",
-    ["🎵 写一首歌", "🔄 二创翻唱", "🎬 生成视频", "⚙️ 设置"],
+    ["🎵 写一首歌", "🔄 二创翻唱", "⚙️ 设置"],
     index=0,  # 默认打开写歌页面，Suno Cookie 可选
 )
 
@@ -1143,102 +1142,6 @@ elif page == "🔄 二创翻唱":
                 else:
                     st.error("生成失败")
                     st.text(f"错误信息:\n{stderr}")
-
-
-# ═══════════════════════════════════════════
-#  页面：生成视频
-# ═══════════════════════════════════════════
-elif page == "🎬 生成视频":
-    st.title("🎬 生成歌词短视频")
-    st.markdown("给一首歌配上动态背景和卡点歌词，生成抖音竖屏视频。")
-
-    st.warning("⚠️ 视频生成功能需要在本地运行（需要 ffmpeg 等工具）。如果你在云端访问，这个功能可能无法使用。")
-
-    st.markdown("---")
-
-    audio_file = st.file_uploader("上传歌曲", type=["mp3", "wav", "m4a"])
-
-    col1, col2 = st.columns(2)
-    with col1:
-        song_name = st.text_input("歌名", placeholder="晴天")
-        artist_name = st.text_input("歌手", placeholder="周杰伦")
-
-    with col2:
-        mood_options = {
-            "A - 伤感/失恋（深色焦散光）": "A",
-            "B - 思念/暗恋（星空流动）": "B",
-            "C - 治愈/释怀（暖色焦散）": "C",
-            "D - 愤怒/执念（霓虹脉冲）": "D",
-            "E - 甜蜜/浪漫（粉色泡泡）": "E",
-            "F - 孤独/深夜（烟雾氛围）": "F",
-            "G - 古风/情感（墨迹晕染）": "G",
-        }
-        mood_label = st.selectbox("视频情绪模版", list(mood_options.keys()))
-        mood_tag = mood_options[mood_label]
-
-        duration = st.slider("视频时长（秒）", 15, 60, 30)
-
-    lyrics = st.text_area(
-        "歌词（可选，不填会自动识别）",
-        placeholder="[Verse 1]\n歌词...\n\n[Chorus]\n副歌...",
-        height=150,
-    )
-
-    hook = st.text_input("Hook 金句（可选，显示在视频开头）", placeholder="比如: 深夜听到这首，想起一个人")
-
-    if st.button("🚀 生成视频", type="primary", use_container_width=True):
-        if not audio_file:
-            st.error("请先上传歌曲")
-            st.stop()
-
-        output_dir = get_output_dir()
-        progress = st.empty()
-        progress.info("正在生成视频，请耐心等待（通常需要 1-3 分钟）...")
-
-        # 保存上传文件
-        audio_path = os.path.join(output_dir, audio_file.name)
-        with open(audio_path, "wb") as f:
-            f.write(audio_file.read())
-
-        output_path = os.path.join(output_dir, f"{song_name or 'video'}.mp4")
-
-        env = os.environ.copy()
-        env.update({
-            "SONG_NAME": song_name or "未命名",
-            "ARTIST_NAME": artist_name or "未知",
-            "AUDIO_PATH": audio_path,
-            "LYRICS_RAW": lyrics,
-            "OUTPUT_PATH": output_path,
-            "MOOD_TAG": mood_tag,
-            "VIDEO_DURATION": str(duration),
-            "HOOK_OVERLAY_TEXT": hook or "",
-        })
-        if st.session_state.get("gemini_key"):
-            env["GEMINI_API_KEY"] = st.session_state["gemini_key"]
-
-        try:
-            result = subprocess.run(
-                [sys.executable, str(VIDEO_SCRIPT)],
-                capture_output=True, text=True, timeout=300, env=env,
-            )
-            progress.empty()
-
-            if result.returncode == 0 and os.path.exists(output_path):
-                st.success("视频生成完成！")
-                st.video(output_path)
-                with open(output_path, "rb") as fh:
-                    st.download_button(
-                        "⬇️ 下载视频",
-                        data=fh.read(),
-                        file_name=f"{song_name or 'video'}.mp4",
-                        mime="video/mp4",
-                    )
-            else:
-                st.error("视频生成失败")
-                st.text(result.stderr[-1000:] if result.stderr else result.stdout[-1000:])
-        except subprocess.TimeoutExpired:
-            progress.empty()
-            st.error("视频生成超时（超过 5 分钟）")
 
 
 # ── 启动入口（本地运行时） ──

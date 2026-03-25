@@ -33,9 +33,9 @@ window.addEventListener("message", function(event) {
         return;
     }
 
-    // Same request already completed - return cached result
+    // Same request already completed - Streamlit already has the value, do NOT call
+    // setComponentValue again (that would trigger an infinite rerun loop)
     if (args.request_id === _currentRequestId && _result !== null) {
-        setComponentValue(_result);
         setFrameHeight(0);
         return;
     }
