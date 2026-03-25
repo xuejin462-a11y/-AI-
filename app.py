@@ -111,55 +111,76 @@ def get_output_dir():
 # ═══════════════════════════════════════════
 
 def search_and_download_song(query, output_dir):
-    """按歌名从 YouTube 搜索并下载音频，返回文件路径"""
-    try:
-        import yt_dlp
-    except ImportError:
-        return None, "yt-dlp 未安装，请直接上传音频文件"
+    """通过网易云音乐搜索并下载歌曲，返回 (文件路径, 歌名) 或 (None, 错误信息)"""
+    import json as _json
 
-    os.makedirs(output_dir, exist_ok=True)
-    output_template = os.path.join(output_dir, "ref_%(title).50s.%(ext)s")
-
-    ydl_opts = {
-        "format": "bestaudio/best",
-        "postprocessors": [{
-            "key": "FFmpegExtractAudio",
-            "preferredcodec": "mp3",
-            "preferredquality": "192",
-        }],
-        "outtmpl": output_template,
-        "default_search": "ytsearch1",  # 只取第一个结果
-        "quiet": True,
-        "no_warnings": True,
-        "socket_timeout": 30,
-        "retries": 3,
-        "fragment_retries": 3,
-        "extractor_retries": 3,
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
+        "Referer": "https://music.163.com/",
     }
 
+    # 1. 搜索歌曲
     try:
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            info = ydl.extract_info(query, download=True)
-            if "entries" in info:
-                info = info["entries"][0]
-            # 找到下载的文件
-            title = info.get("title", "unknown")
-            # yt-dlp 下载后文件名可能被截断，搜索目录中最新的 mp3
-            mp3_files = sorted(
-                [f for f in os.listdir(output_dir) if f.startswith("ref_") and f.endswith(".mp3")],
-                key=lambda f: os.path.getmtime(os.path.join(output_dir, f)),
-                reverse=True,
-            )
-            if mp3_files:
-                return os.path.join(output_dir, mp3_files[0]), title
-            return None, f"下载完成但找不到文件"
-    except BrokenPipeError:
-        return None, "云端环境下载受限（Broken pipe），请改用「上传文件」方式：在本地下载好歌曲后上传"
+        r = requests.post(
+            "https://music.163.com/api/search/get/web",
+            data={"s": query, "type": 1, "limit": 10, "offset": 0},
+            headers=headers, timeout=15,
+        )
+        data = r.json()
+        if data.get("code") != 200 or not data.get("result", {}).get("songs"):
+            return None, f"搜索「{query}」无结果，请换个关键词试试"
     except Exception as e:
-        err_msg = str(e)
-        if "Broken pipe" in err_msg or "Errno 32" in err_msg:
-            return None, "云端环境下载受限，请改用「上传文件」方式：在本地下载好歌曲后上传"
-        return None, f"搜索/下载失败: {e}"
+        return None, f"搜索请求失败: {e}"
+
+    songs = data["result"]["songs"]
+
+    # 2. 批量获取播放 URL
+    try:
+        song_ids = [s["id"] for s in songs]
+        r2 = requests.get(
+            "https://music.163.com/api/song/enhance/player/url",
+            params={"ids": _json.dumps(song_ids), "br": 320000},
+            headers=headers, timeout=15,
+        )
+        url_map = {d["id"]: d for d in r2.json().get("data", [])}
+    except Exception as e:
+        return None, f"获取播放地址失败: {e}"
+
+    # 3. 找第一个有 URL 的歌曲并下载
+    os.makedirs(output_dir, exist_ok=True)
+    for s in songs:
+        ud = url_map.get(s["id"], {})
+        audio_url = ud.get("url")
+        if not audio_url:
+            continue
+
+        artists = "/".join(a["name"] for a in s["artists"])
+        title = f"{artists} - {s['name']}"
+        safe_name = title.replace("/", "_").replace("\\", "_")[:50]
+        filepath = os.path.join(output_dir, f"ref_{safe_name}.mp3")
+
+        try:
+            r3 = requests.get(audio_url, headers=headers, timeout=60, stream=True)
+            r3.raise_for_status()
+            with open(filepath, "wb") as f:
+                for chunk in r3.iter_content(8192):
+                    f.write(chunk)
+            if os.path.getsize(filepath) > 1000:  # 排除空文件
+                return filepath, title
+            os.remove(filepath)
+        except Exception:
+            continue
+
+    # 所有结果都无法下载（全是付费曲目）
+    top_results = []
+    for s in songs[:5]:
+        artists = "/".join(a["name"] for a in s["artists"])
+        top_results.append(f"• {artists} - {s['name']}")
+    return None, (
+        f"「{query}」的搜索结果均为付费歌曲，无法直接下载。\n"
+        f"搜索到的歌曲：\n" + "\n".join(top_results) + "\n\n"
+        f"建议：在本地下载后用「上传文件」方式上传。"
+    )
 
 
 def show_suno_fallback(lyrics, style_prompt, title):
