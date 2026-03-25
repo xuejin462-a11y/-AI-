@@ -459,17 +459,112 @@ elif page == "🎵 写一首歌":
     )
 
     if mode == "💡 我有一个灵感/想法":
-        st.markdown("""
-        **随便描述你的想法就行，比如：**
-        - 「深夜加班后走在空旷马路上的孤独感」
-        - 「异地恋，她在北京他在成都」
-        - 「像《晴天》那种感觉的歌」
-        """)
-        inspiration = st.text_area(
-            "你的灵感/想法",
-            placeholder="随便写，比如：一首关于夏天毕业的歌，有点伤感但也有释怀的感觉...",
-            height=120,
+        # ── 灵感来源选择 ──
+        inspo_source = st.radio(
+            "灵感来源",
+            ["✏️ 自由输入", "🔥 抖音热点", "📚 Melody 灵感库"],
+            horizontal=True,
+            key="inspo_source",
         )
+
+        if inspo_source == "✏️ 自由输入":
+            st.markdown("""
+            **随便描述你的想法就行，比如：**
+            - 「深夜加班后走在空旷马路上的孤独感」
+            - 「异地恋，她在北京他在成都」
+            - 「像《晴天》那种感觉的歌」
+            """)
+            inspiration = st.text_area(
+                "你的灵感/想法",
+                placeholder="随便写，比如：一首关于夏天毕业的歌，有点伤感但也有释怀的感觉...",
+                height=120,
+                key="inspo_free",
+            )
+
+        elif inspo_source == "🔥 抖音热点":
+            # 获取抖音热搜
+            if "douyin_trending" not in st.session_state:
+                st.session_state["douyin_trending"] = None
+                st.session_state["douyin_analysis"] = ""
+
+            if st.button("🔄 获取今日抖音热搜", type="secondary"):
+                with st.spinner("正在获取抖音热搜..."):
+                    try:
+                        _headers = {
+                            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
+                            "Referer": "https://www.douyin.com/",
+                        }
+                        r = requests.get(
+                            "https://www.douyin.com/aweme/v1/web/hot/search/list/",
+                            headers=_headers, timeout=15,
+                        )
+                        data = r.json()
+                        words = data.get("data", {}).get("word_list", [])
+                        st.session_state["douyin_trending"] = words[:20]
+                    except Exception as e:
+                        st.error(f"获取热搜失败: {e}")
+
+            trending = st.session_state.get("douyin_trending")
+            if trending:
+                st.markdown("### 今日抖音热搜")
+                # 展示热搜列表供选择
+                topic_options = [f"{i+1}. {t.get('word', '')}" for i, t in enumerate(trending)]
+                selected_topics = st.multiselect(
+                    "选择感兴趣的热点话题（可多选）",
+                    topic_options,
+                    key="trending_select",
+                )
+
+                if selected_topics and st.button("🤖 AI 分析创作角度", type="secondary"):
+                    topics_text = "\n".join(selected_topics)
+                    with st.spinner("AI 正在分析创作角度..."):
+                        try:
+                            analysis = _call_netease_gateway(
+                                "claude-opus-4-20250514",
+                                f"你是一位华语流行音乐创作顾问。以下是今天的抖音热搜话题：\n\n{topics_text}\n\n"
+                                f"请从这些热点中提炼 2-3 个适合写歌的创作角度，每个角度包括：\n"
+                                f"1. 核心情感（一句话）\n"
+                                f"2. 歌曲方向描述（2-3句，描述这首歌应该表达什么）\n"
+                                f"3. 推荐情绪基调（伤感/治愈/热血/甜蜜等）\n\n"
+                                f"注意：不要直接写新闻，要提炼其中的情感共鸣点，转化为歌曲创作灵感。",
+                                max_tokens=1500,
+                            )
+                            st.session_state["douyin_analysis"] = analysis
+                        except Exception as e:
+                            st.error(f"AI 分析失败: {e}")
+
+                if st.session_state.get("douyin_analysis"):
+                    st.markdown("### AI 创作角度分析")
+                    st.markdown(st.session_state["douyin_analysis"])
+                    st.markdown("---")
+
+            inspiration = st.text_area(
+                "基于热点话题，写下你的创作灵感",
+                placeholder="可以直接复制上面 AI 的分析，也可以用自己的想法...",
+                height=120,
+                key="inspo_trending",
+            )
+
+        else:  # Melody 灵感库
+            st.markdown("""
+            ### Melody 合伙人灵感库
+
+            点击下方链接进入灵感库，浏览灵感后回来填写。
+            """)
+            st.link_button(
+                "🔗 打开 Melody 灵感库",
+                "https://melody.panshi-gy.netease.com/creative?tab=inspirationLibrary",
+                type="primary",
+            )
+            st.info("**登录账号:** xuejin01 &nbsp;&nbsp; **密码:** melody888")
+            st.markdown("---")
+            inspiration = st.text_area(
+                "从灵感库获取灵感后，描述你的创作想法",
+                placeholder="比如：灵感库里有一条「雨天咖啡馆的邂逅」，我想做一首类似氛围的歌...",
+                height=120,
+                key="inspo_melody",
+            )
+
         lyrics_input = ""
 
         # 参考曲：上传或搜索
