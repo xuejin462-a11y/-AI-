@@ -114,7 +114,7 @@ def get_output_dir():
 
 def _download_from_netease(query, output_dir):
     """通过网易云音乐 API 搜索并下载，返回 (filepath, title) 或 (None, None)"""
-        headers = {
+    headers = {
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
         "Referer": "https://music.163.com/",
     }
@@ -795,9 +795,9 @@ elif page == "🎵 写一首歌":
                         with st.spinner("AI 起名中..."):
                             try:
                                 name_result = _call_netease_gateway(
-                                    "claude-haiku-4-5-20251001",
-                                    f"根据以下歌词，起3个歌名（2-5个字，有意境，不要太直白）。只输出歌名，每行一个，不要编号不要解释。\n\n{lyrics_input[:500]}",
-                                    max_tokens=100,
+                                    "moonshot-v1-8k",
+                                    f"你是抖音爆款歌曲命名专家。根据以下歌词，起5个有抖音网感的歌名。\n\n要求：\n- 2-5个字\n- 有意境、有记忆点\n- 适合在抖音传播（年轻化、有情绪共鸣）\n- 可以用「·」分隔增加格调感\n- 只输出歌名，每行一个，不要编号不要解释\n\n歌词：\n{lyrics_input[:500]}",
+                                    max_tokens=150,
                                 )
                                 st.session_state["auto_title"] = name_result.strip()
                             except Exception as e:
