@@ -1,7 +1,6 @@
 streamlit>=1.28.0
 requests
+openai
 Pillow
 librosa
-google-genai
-anthropic
 yt-dlp

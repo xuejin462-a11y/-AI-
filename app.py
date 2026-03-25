@@ -132,6 +132,9 @@ def search_and_download_song(query, output_dir):
         "quiet": True,
         "no_warnings": True,
         "socket_timeout": 30,
+        "retries": 3,
+        "fragment_retries": 3,
+        "extractor_retries": 3,
     }
 
     try:
@@ -150,7 +153,12 @@ def search_and_download_song(query, output_dir):
             if mp3_files:
                 return os.path.join(output_dir, mp3_files[0]), title
             return None, f"下载完成但找不到文件"
+    except BrokenPipeError:
+        return None, "云端环境下载受限（Broken pipe），请改用「上传文件」方式：在本地下载好歌曲后上传"
     except Exception as e:
+        err_msg = str(e)
+        if "Broken pipe" in err_msg or "Errno 32" in err_msg:
+            return None, "云端环境下载受限，请改用「上传文件」方式：在本地下载好歌曲后上传"
         return None, f"搜索/下载失败: {e}"
 
 
@@ -230,49 +238,53 @@ LYRICS_PROMPT_TEMPLATE = """你是一位顶尖华语流行音乐词作者。
 """
 
 
+# ── 网易 AI 网关配置 ──
+NETEASE_BASE_URL = "https://aigw.netease.com/v1"
+NETEASE_API_KEY = "trltfs9kdk59cyfw.ov211ltwsnx1fm0kwtz4v8dfp8xmls8t"
+
+
+def _call_netease_gateway(model, prompt, max_tokens=4096):
+    """通过网易 AI 网关调用模型（OpenAI-compatible）"""
+    from openai import OpenAI
+    client = OpenAI(base_url=NETEASE_BASE_URL, api_key=NETEASE_API_KEY)
+    response = client.chat.completions.create(
+        model=model,
+        max_tokens=max_tokens,
+        messages=[{"role": "user", "content": prompt}],
+    )
+    return response.choices[0].message.content
+
+
 def generate_lyrics_gemini(inspiration, mood, genre, vocal, bpm):
-    """调用 Gemini 写歌词"""
+    """调用 Gemini 写歌词（通过网易 AI 网关）"""
     try:
-        from google import genai
-        client = genai.Client(api_key=st.session_state["gemini_key"])
         prompt = LYRICS_PROMPT_TEMPLATE.format(
             inspiration=inspiration, mood=mood, genre=genre, vocal=vocal, bpm=bpm
         )
-        response = client.models.generate_content(
-            model="gemini-2.5-flash-preview-05-20",
-            contents=prompt,
-        )
-        return response.text
+        return _call_netease_gateway("gemini-3-pro", prompt)
     except Exception as e:
         return f"Gemini 写词失败: {e}"
 
 
 def generate_lyrics_claude(inspiration, mood, genre, vocal, bpm):
-    """调用 Claude 写歌词"""
+    """调用 Claude 写歌词（通过网易 AI 网关）"""
     try:
-        import anthropic
-        client = anthropic.Anthropic(api_key=st.session_state["anthropic_key"])
         prompt = LYRICS_PROMPT_TEMPLATE.format(
             inspiration=inspiration, mood=mood, genre=genre, vocal=vocal, bpm=bpm
         )
-        response = client.messages.create(
-            model="claude-sonnet-4-20250514",
-            max_tokens=4096,
-            messages=[{"role": "user", "content": prompt}],
-        )
-        return response.content[0].text
+        return _call_netease_gateway("claude-opus-4-20250514", prompt)
     except Exception as e:
         return f"Claude 写词失败: {e}"
 
 
 def can_generate_lyrics():
-    """检查是否至少有一个写词模型可用"""
-    return bool(st.session_state.get("gemini_key") or st.session_state.get("anthropic_key"))
+    """AI 写词始终可用（走网易 AI 网关，无需用户填 Key）"""
+    return True
 
 
 def can_dual_generate():
-    """检查是否两个写词模型都可用（比稿模式）"""
-    return bool(st.session_state.get("gemini_key") and st.session_state.get("anthropic_key"))
+    """比稿模式始终可用（走网易 AI 网关）"""
+    return True
 
 
 # ═══════════════════════════════════════════
