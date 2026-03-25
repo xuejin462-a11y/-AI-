@@ -349,14 +349,14 @@ def can_dual_generate():
 
 # 配置状态指示
 if is_suno_ready():
-    st.sidebar.success("Suno 已连接")
+    st.sidebar.success("Suno 已连接（自动生成模式）")
 else:
-    st.sidebar.warning("Suno 未配置")
+    st.sidebar.info("Suno 未配置（手动模式）")
 
 page = st.sidebar.radio(
     "选择功能",
     ["🎵 写一首歌", "🔄 二创翻唱", "🎬 生成视频", "⚙️ 设置"],
-    index=3 if not is_suno_ready() else 0,  # 未配置时默认打开设置页
+    index=0,  # 默认打开写歌页面，Suno Cookie 可选
 )
 
 st.sidebar.markdown("---")
@@ -375,9 +375,9 @@ if page == "⚙️ 设置":
     st.markdown("---")
 
     # ── Suno Cookie ──
-    st.subheader("🎵 Suno Cookie（必须，用来生成歌曲）")
+    st.subheader("🎵 Suno Cookie（可选，填写后可自动生成歌曲）")
 
-    with st.expander("📖 怎么获取 Suno Cookie？点这里看教程", expanded=not is_suno_ready()):
+    with st.expander("📖 怎么获取 Suno Cookie？（不填也能用，只是需要手动去 Suno 网页生成）"):
         st.markdown("""
 **一步一步来，很简单：**
 
@@ -421,100 +421,12 @@ if page == "⚙️ 设置":
 
     st.markdown("---")
 
-    # ── Gemini API Key ──
-    st.subheader("🧠 Gemini API Key（写歌词用，推荐配置）")
-
-    with st.expander("📖 怎么获取 Gemini API Key？"):
-        st.markdown("""
-1. 打开 **aistudio.google.com/apikey**（Google AI Studio）
-2. 用你的 **Google 账号**登录（没有就注册一个，免费的）
-3. 点击「**Create API Key**」按钮
-4. 会生成一串以 **AIza** 开头的字符串
-5. 点复制，粘贴到下面
-
-> 💡 Gemini API 有免费额度，日常写歌词完全够用。
-        """)
-
-    gemini_input = st.text_input(
-        "粘贴你的 Gemini API Key",
-        value=st.session_state.get("gemini_key", ""),
-        type="password",
-        placeholder="以 AIza 开头...",
-        key="gemini_key_input",
-    )
-
-    if st.button("保存 Gemini Key"):
-        st.session_state["gemini_key"] = gemini_input.strip()
-        st.success("Gemini Key 已保存！")
-
-    st.markdown("---")
-
-    # ── Anthropic API Key ──
-    st.subheader("🤖 Claude API Key（写歌词用，推荐配置）")
-
-    with st.expander("📖 怎么获取 Claude API Key？"):
-        st.markdown("""
-1. 打开 **console.anthropic.com**（Anthropic 控制台）
-2. 注册或登录你的账号
-3. 点左侧「**API Keys**」
-4. 点「**Create Key**」，给它起个名字（比如"做歌"）
-5. 复制生成的 Key（以 `sk-ant-` 开头）
-6. 粘贴到下面
-
-> 💡 Claude 用来写歌词（和 Gemini 各写一版，然后选最好的）。
-> 如果只配了一个模型，也能用，只是不能比稿。两个都配效果最好。
-        """)
-
-    anthropic_input = st.text_input(
-        "粘贴你的 Claude API Key",
-        value=st.session_state.get("anthropic_key", ""),
-        type="password",
-        placeholder="以 sk-ant- 开头...",
-        key="anthropic_key_input",
-    )
-
-    if st.button("保存 Claude Key"):
-        st.session_state["anthropic_key"] = anthropic_input.strip()
-        st.success("Claude Key 已保存！")
-
-    st.markdown("---")
-
-    # ── 豆包 API Key ──
-    st.subheader("🎨 豆包 API Key（生成封面图，可选）")
-
-    with st.expander("📖 怎么获取豆包 API Key？"):
-        st.markdown("""
-1. 打开 **console.volcengine.com/ark**（火山引擎控制台）
-2. 注册或登录你的火山引擎账号
-3. 进入「模型推理」→「API Key 管理」
-4. 点「创建 API Key」，复制生成的 Key
-5. 粘贴到下面
-
-> 💡 这个是可选的，不配也完全不影响做歌。
-        """)
-
-    ark_input = st.text_input(
-        "粘贴你的豆包 API Key",
-        value=st.session_state.get("ark_key", ""),
-        type="password",
-        placeholder="可选，不填也不影响做歌",
-        key="ark_key_input",
-    )
-
-    if st.button("保存豆包 Key"):
-        st.session_state["ark_key"] = ark_input.strip()
-        st.success("豆包 Key 已保存！")
-
-    st.markdown("---")
-
     # ── 配置状态总览 ──
     st.subheader("📊 当前配置状态")
 
     checks = [
-        ("Suno Cookie", is_suno_ready(), "做歌必须"),
-        ("Gemini API", bool(st.session_state.get("gemini_key")), "写歌词用，推荐"),
-        ("Claude API", bool(st.session_state.get("anthropic_key")), "写歌词用，推荐（两个都配可比稿）"),
-        ("豆包 API", bool(st.session_state.get("ark_key")), "封面图，可选"),
+        ("Suno Cookie", is_suno_ready(), "可选，填写后自动生成歌曲；不填则跳转 Suno 网页手动操作"),
+        ("AI 写歌词", True, "已就绪（Gemini + Claude 双模型比稿，无需配置）"),
     ]
 
     for name, ok, desc in checks:
@@ -535,8 +447,7 @@ elif page == "🎵 写一首歌":
     st.markdown("告诉我你想做什么样的歌，剩下的交给 AI。")
 
     if not is_suno_ready():
-        st.error("还没有配置 Suno 账号，请先去左边「⚙️ 设置」页面填写 Suno Cookie。")
-        st.stop()
+        st.info("💡 未填写 Suno Cookie，做歌完成后将跳转 Suno 网页手动生成。填写 Cookie 可自动生成。")
 
     st.markdown("---")
 
@@ -697,43 +608,24 @@ elif page == "🎵 写一首歌":
         if can_generate_lyrics():
             st.subheader("第 1 步：AI 写歌词")
 
-            if can_dual_generate():
-                st.caption("Gemini + Claude 各写一版，你来挑最好的")
-            elif st.session_state.get("gemini_key"):
-                st.caption("使用 Gemini 写歌词（配上 Claude API Key 可以比稿）")
-            else:
-                st.caption("使用 Claude 写歌词（配上 Gemini API Key 可以比稿）")
+            st.caption("Gemini + Claude 各写一版，你来挑最好的")
 
             if st.button("✍️ AI 写歌词", type="secondary", use_container_width=True):
                 if not inspiration:
                     st.error("请先填写你的灵感/想法")
                     st.stop()
 
-                with st.spinner("AI 正在写歌词，请稍等..."):
-                    has_gemini = bool(st.session_state.get("gemini_key"))
-                    has_claude = bool(st.session_state.get("anthropic_key"))
-
-                    if has_gemini and has_claude:
-                        # 双模型并行写词
-                        with ThreadPoolExecutor(max_workers=2) as executor:
-                            future_g = executor.submit(
-                                generate_lyrics_gemini, inspiration, mood_clean, genre_clean, vocal_clean, bpm
-                            )
-                            future_c = executor.submit(
-                                generate_lyrics_claude, inspiration, mood_clean, genre_clean, vocal_clean, bpm
-                            )
-                            st.session_state["lyrics_gemini"] = future_g.result()
-                            st.session_state["lyrics_claude"] = future_c.result()
-                    elif has_gemini:
-                        st.session_state["lyrics_gemini"] = generate_lyrics_gemini(
-                            inspiration, mood_clean, genre_clean, vocal_clean, bpm
+                with st.spinner("AI 正在写歌词（Gemini + Claude 双模型比稿），请稍等..."):
+                    # 双模型并行写词（均走网易 AI 网关，无需用户配置）
+                    with ThreadPoolExecutor(max_workers=2) as executor:
+                        future_g = executor.submit(
+                            generate_lyrics_gemini, inspiration, mood_clean, genre_clean, vocal_clean, bpm
                         )
-                        st.session_state["lyrics_claude"] = ""
-                    else:
-                        st.session_state["lyrics_claude"] = generate_lyrics_claude(
-                            inspiration, mood_clean, genre_clean, vocal_clean, bpm
+                        future_c = executor.submit(
+                            generate_lyrics_claude, inspiration, mood_clean, genre_clean, vocal_clean, bpm
                         )
-                        st.session_state["lyrics_gemini"] = ""
+                        st.session_state["lyrics_gemini"] = future_g.result()
+                        st.session_state["lyrics_claude"] = future_c.result()
 
                     st.session_state["lyrics_generated"] = True
                 st.rerun()
@@ -776,10 +668,6 @@ elif page == "🎵 写一首歌":
                 )
 
                 st.markdown("---")
-        else:
-            st.info("💡 要让 AI 帮你写歌词，请在「⚙️ 设置」页面配置 Gemini 和/或 Claude API Key。")
-            st.info("你也可以直接切到「📝 我已经写好歌词了」模式，粘贴自己的歌词。")
-
     # ═══════════════════════════════════════════
     #  第二步：提交 Suno 做歌
     # ═══════════════════════════════════════════
@@ -791,77 +679,81 @@ elif page == "🎵 写一首歌":
             st.error("请至少填写一个灵感、歌词或上传/搜索参考曲")
             st.stop()
 
-        output_dir = get_output_dir()
-        progress = st.empty()
-        status = st.empty()
+        # 没有 Cookie → 直接走手动模式
+        if not is_suno_ready():
+            show_suno_fallback(lyrics_input, style_prompt, title)
+        else:
+            output_dir = get_output_dir()
+            progress = st.empty()
+            status = st.empty()
 
-        # 参考曲路径：上传的 > 搜索下载的
-        ref_path = None
-        if ref_audio:
-            ref_path = os.path.join(output_dir, f"ref_{ref_audio.name}")
-            with open(ref_path, "wb") as f:
-                f.write(ref_audio.read())
-            status.success("参考曲已保存")
-        elif has_searched_ref:
-            ref_path = st.session_state["searched_ref_path"]
-            status.success(f"使用搜索到的参考曲")
+            # 参考曲路径：上传的 > 搜索下载的
+            ref_path = None
+            if ref_audio:
+                ref_path = os.path.join(output_dir, f"ref_{ref_audio.name}")
+                with open(ref_path, "wb") as f:
+                    f.write(ref_audio.read())
+                status.success("参考曲已保存")
+            elif has_searched_ref:
+                ref_path = st.session_state["searched_ref_path"]
+                status.success(f"使用搜索到的参考曲")
 
-        # 确定调用模式
-        args = []
-        if ref_path:
-            if lyrics_input:
+            # 确定调用模式
+            args = []
+            if ref_path:
+                if lyrics_input:
+                    args = ["inspo",
+                        "--audio", ref_path,
+                        "--description", style_prompt,
+                        "--title", title or "未命名",
+                        "--lyrics", lyrics_input,
+                        "--out", output_dir]
+                else:
+                    args = ["remix",
+                        "--audio", ref_path,
+                        "--style", style_prompt,
+                        "--title", title or "未命名",
+                        "--out", output_dir]
+            elif lyrics_input:
+                st.info("没有参考曲，Suno 会从零生成旋律。上传参考曲效果更好，但不上传也能用。")
                 args = ["inspo",
-                    "--audio", ref_path,
                     "--description", style_prompt,
                     "--title", title or "未命名",
                     "--lyrics", lyrics_input,
                     "--out", output_dir]
             else:
-                args = ["remix",
-                    "--audio", ref_path,
-                    "--style", style_prompt,
-                    "--title", title or "未命名",
-                    "--out", output_dir]
-        elif lyrics_input:
-            st.info("没有参考曲，Suno 会从零生成旋律。上传参考曲效果更好，但不上传也能用。")
-            args = ["inspo",
-                "--description", style_prompt,
-                "--title", title or "未命名",
-                "--lyrics", lyrics_input,
-                "--out", output_dir]
-        else:
-            st.error("请先让 AI 写歌词，或者自己填写歌词，或者上传/搜索参考曲。")
-            st.stop()
+                st.error("请先让 AI 写歌词，或者自己填写歌词，或者上传/搜索参考曲。")
+                st.stop()
 
-        # 调用 Suno
-        stdout, stderr, code = run_suno_cmd(args, progress)
+            # 调用 Suno
+            stdout, stderr, code = run_suno_cmd(args, progress)
 
-        if code == 0:
-            progress.empty()
-            st.success("做歌完成！🎉")
-            st.text(stdout)
-            output_files = [f for f in os.listdir(output_dir)
-                          if f.endswith((".wav", ".mp3")) and not f.startswith("ref_")]
-            if output_files:
-                st.markdown("### 生成的歌曲")
-                for f in sorted(output_files):
-                    filepath = os.path.join(output_dir, f)
-                    st.audio(filepath)
-                    with open(filepath, "rb") as fh:
-                        st.download_button(
-                            f"⬇️ 下载 {f}",
-                            data=fh.read(),
-                            file_name=f,
-                            mime="audio/wav",
-                        )
-        else:
-            progress.empty()
-            # Cookie 过期 → 降级为手动模式
-            if "422" in stderr or "Token validation" in stderr:
-                show_suno_fallback(lyrics_input, style_prompt, title)
+            if code == 0:
+                progress.empty()
+                st.success("做歌完成！🎉")
+                st.text(stdout)
+                output_files = [f for f in os.listdir(output_dir)
+                              if f.endswith((".wav", ".mp3")) and not f.startswith("ref_")]
+                if output_files:
+                    st.markdown("### 生成的歌曲")
+                    for f in sorted(output_files):
+                        filepath = os.path.join(output_dir, f)
+                        st.audio(filepath)
+                        with open(filepath, "rb") as fh:
+                            st.download_button(
+                                f"⬇️ 下载 {f}",
+                                data=fh.read(),
+                                file_name=f,
+                                mime="audio/wav",
+                            )
             else:
-                st.error("生成失败")
-                st.text(f"错误信息:\n{stderr}\n\n输出:\n{stdout}")
+                progress.empty()
+                # Cookie 过期 → 降级为手动模式
+                if "422" in stderr or "Token validation" in stderr:
+                    show_suno_fallback(lyrics_input, style_prompt, title)
+                else:
+                    st.error("生成失败")
+                    st.text(f"错误信息:\n{stderr}\n\n输出:\n{stdout}")
 
 
 # ═══════════════════════════════════════════
@@ -872,8 +764,7 @@ elif page == "🔄 二创翻唱":
     st.markdown("上传一首歌，换一种风格或声线重新唱。旋律保留，只换感觉。")
 
     if not is_suno_ready():
-        st.error("还没有配置 Suno 账号，请先去左边「⚙️ 设置」页面填写 Suno Cookie。")
-        st.stop()
+        st.info("💡 未填写 Suno Cookie，二创完成后将跳转 Suno 网页手动生成。填写 Cookie 可自动生成。")
 
     st.markdown("---")
 
@@ -916,48 +807,52 @@ elif page == "🔄 二创翻唱":
             st.error("请先上传原曲")
             st.stop()
 
-        output_dir = get_output_dir()
-        progress = st.empty()
-
-        # 保存上传文件
-        audio_path = os.path.join(output_dir, f"original_{audio_file.name}")
-        with open(audio_path, "wb") as f:
-            f.write(audio_file.read())
-
         style = f"{target_style}, {vocal_map.get(target_vocal, target_vocal)}, studio quality"
         if len(style) > 200:
             style = style[:200]
 
-        args = ["remix",
-            "--audio", audio_path,
-            "--style", style,
-            "--title", title or "二创版本",
-            "--out", output_dir]
-
-        stdout, stderr, code = run_suno_cmd(args, progress)
-        progress.empty()
-
-        if code == 0:
-            st.success("二创完成！🎉")
-            st.text(stdout)
-            output_files = [f for f in os.listdir(output_dir)
-                          if f.endswith((".wav", ".mp3")) and not f.startswith("original_")]
-            for f in sorted(output_files):
-                filepath = os.path.join(output_dir, f)
-                st.audio(filepath)
-                with open(filepath, "rb") as fh:
-                    st.download_button(
-                        f"⬇️ 下载 {f}",
-                        data=fh.read(),
-                        file_name=f,
-                        mime="audio/wav",
-                    )
+        # 没有 Cookie → 直接走手动模式
+        if not is_suno_ready():
+            show_suno_fallback("", style, title or "二创版本")
         else:
-            if "422" in stderr or "Token validation" in stderr:
-                show_suno_fallback("", style, title)
+            output_dir = get_output_dir()
+            progress = st.empty()
+
+            # 保存上传文件
+            audio_path = os.path.join(output_dir, f"original_{audio_file.name}")
+            with open(audio_path, "wb") as f:
+                f.write(audio_file.read())
+
+            args = ["remix",
+                "--audio", audio_path,
+                "--style", style,
+                "--title", title or "二创版本",
+                "--out", output_dir]
+
+            stdout, stderr, code = run_suno_cmd(args, progress)
+            progress.empty()
+
+            if code == 0:
+                st.success("二创完成！🎉")
+                st.text(stdout)
+                output_files = [f for f in os.listdir(output_dir)
+                              if f.endswith((".wav", ".mp3")) and not f.startswith("original_")]
+                for f in sorted(output_files):
+                    filepath = os.path.join(output_dir, f)
+                    st.audio(filepath)
+                    with open(filepath, "rb") as fh:
+                        st.download_button(
+                            f"⬇️ 下载 {f}",
+                            data=fh.read(),
+                            file_name=f,
+                            mime="audio/wav",
+                        )
             else:
-                st.error("生成失败")
-                st.text(f"错误信息:\n{stderr}")
+                if "422" in stderr or "Token validation" in stderr:
+                    show_suno_fallback("", style, title)
+                else:
+                    st.error("生成失败")
+                    st.text(f"错误信息:\n{stderr}")
 
 
 # ═══════════════════════════════════════════
