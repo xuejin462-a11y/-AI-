@@ -5,7 +5,7 @@ AI 模型调用通过浏览器端 JavaScript 直接走网易 AI 网关（绕过 
 """
 
 import streamlit as st
-import streamlit.components.v1 as st_components
+from streamlit_javascript import st_javascript
 import subprocess
 import os
 import sys
@@ -18,18 +18,6 @@ from pathlib import Path
 # ── 项目路径 ──
 PROJECT_DIR = Path(__file__).resolve().parent
 SUNO_CLIENT = PROJECT_DIR / "suno-api" / "suno_client.py"
-
-# ── 浏览器端 AI 网关组件（懒加载，只在需要时初始化）──
-_browser_ai_component = None
-
-def _get_browser_ai():
-    global _browser_ai_component
-    if _browser_ai_component is None:
-        _browser_ai_component = st_components.declare_component(
-            "browser_ai",
-            path=str(PROJECT_DIR / "components" / "browser_ai"),
-        )
-    return _browser_ai_component
 
 # ── 页面配置 ──
 st.set_page_config(page_title="AI 做歌系统", page_icon="🎵", layout="wide")
@@ -348,35 +336,72 @@ def _call_gemini_direct(model, prompt, max_tokens=4096):
     return resp.json()["candidates"][0]["content"]["parts"][0]["text"]
 
 
-def render_browser_ai(model, prompt, max_tokens=4096, component_key="default"):
-    """渲染浏览器端 AI 调用组件。
-
-    API 请求从用户浏览器（中国 IP）发出，绕过服务器 IP 限制。
-    返回: dict{"content":..., "status":"ok"} | dict{"error":..., "status":"error"} | None（等待中）
-    """
-    component = _get_browser_ai()
-    return component(
-        model=model,
-        prompt=prompt,
-        max_tokens=max_tokens,
-        api_url=NETEASE_BASE_URL,
-        api_key=NETEASE_API_KEY,
-        request_id=component_key,
-        key=component_key,
-        default=None,
+def _build_fetch_js(model, prompt, max_tokens=4096):
+    """构建浏览器端 fetch 调用网易 AI 网关的 JavaScript 代码"""
+    # 转义 prompt 中的特殊字符（反引号、反斜杠、${}）
+    safe_prompt = (prompt
+        .replace("\\", "\\\\")
+        .replace("`", "\\`")
+        .replace("${", "\\${")
     )
+    return f"""
+(async () => {{
+    try {{
+        const resp = await fetch("{NETEASE_BASE_URL}/chat/completions", {{
+            method: "POST",
+            headers: {{
+                "Authorization": "Bearer {NETEASE_API_KEY}",
+                "Content-Type": "application/json"
+            }},
+            body: JSON.stringify({{
+                model: "{model}",
+                max_tokens: {max_tokens},
+                messages: [{{role: "user", content: `{safe_prompt}`}}]
+            }})
+        }});
+        if (!resp.ok) {{
+            const t = await resp.text();
+            return JSON.stringify({{error: "HTTP " + resp.status + ": " + t.substring(0, 200), status: "error"}});
+        }}
+        const data = await resp.json();
+        const msg = data.choices[0].message;
+        const content = msg.content || msg.reasoning_content || "";
+        return JSON.stringify({{content: content, status: "ok"}});
+    }} catch (e) {{
+        return JSON.stringify({{error: e.message, status: "error"}});
+    }}
+}})()
+"""
+
+
+def render_browser_ai(model, prompt, max_tokens=4096, component_key="default"):
+    """通过 st_javascript 从浏览器端调用网易 AI 网关。
+
+    请求从用户浏览器（中国 IP）发出，绕过服务器 IP 限制。
+    返回: dict | 0（等待中）
+    """
+    js_code = _build_fetch_js(model, prompt, max_tokens)
+    return st_javascript(js_code, key=component_key)
 
 
 def extract_ai_result(result, model=""):
-    """从浏览器 AI 组件结果中提取文本，失败时尝试 Gemini 降级"""
-    if result is None:
-        return None  # 仍在等待
+    """从浏览器端调用结果中提取文本"""
+    # st_javascript 返回 0 表示 JS 还未执行完
+    if result is None or result == 0:
+        return None
+    # 解析 JSON 字符串结果
+    if isinstance(result, str):
+        try:
+            parsed = json.loads(result)
+            if parsed.get("status") == "ok":
+                return parsed.get("content", "")
+            return f"__BROWSER_FAILED__:{parsed.get('error', 'unknown')}"
+        except json.JSONDecodeError:
+            return result  # 直接返回文本
     if isinstance(result, dict):
         if result.get("status") == "ok":
             return result.get("content", "")
-        # 浏览器端调用失败（用户可能不在中国），尝试 Gemini 降级
-        error_msg = result.get("error", "unknown error")
-        return f"__BROWSER_FAILED__:{error_msg}"
+        return f"__BROWSER_FAILED__:{result.get('error', 'unknown')}"
     return str(result)
 
 
@@ -489,37 +514,20 @@ if page == "⚙️ 设置":
     st.caption("AI 功能通过你的浏览器直接调用网易 AI 网关（不经过 Streamlit 服务器），需要中国大陆网络。")
 
     if st.button("测试 AI 网关连通性"):
-        # 测试1：服务端直连（通常 403）
-        with st.spinner("测试服务端直连..."):
-            try:
-                resp = requests.post(
-                    f"{NETEASE_BASE_URL}/chat/completions",
-                    headers={
-                        "Authorization": f"Bearer {NETEASE_API_KEY}",
-                        "Content-Type": "application/json",
-                    },
-                    json={
-                        "model": "gemini-3-pro",
-                        "max_tokens": 20,
-                        "messages": [{"role": "user", "content": "回复OK"}],
-                    },
-                    timeout=15,
-                )
-                if resp.status_code == 200:
-                    st.success(f"✅ 服务端直连正常（HTTP {resp.status_code}）")
-                else:
-                    st.info(f"ℹ️ 服务端直连 HTTP {resp.status_code}（正常，AI 功能已改用浏览器端调用）")
-            except Exception as e:
-                st.info(f"ℹ️ 服务端直连失败（正常，AI 功能已改用浏览器端调用）")
+        st.session_state["diag_running"] = True
+        st.session_state["diag_id"] = str(int(time.time() * 1000))
+        st.rerun()
 
-        # 测试2：浏览器端调用
-        st.markdown("**浏览器端网关测试：** 点击上方按钮后，下方会出现一个小组件自动测试。")
-        test_result = render_browser_ai(
+    if st.session_state.get("diag_running"):
+        # 浏览器端调用测试
+        st.info("正在通过浏览器测试网关...")
+        diag_result = render_browser_ai(
             "gemini-3-pro", "回复OK两个字", max_tokens=20,
-            component_key=f"diag_{int(time.time())}",
+            component_key=f"diag_{st.session_state['diag_id']}",
         )
-        if test_result is not None:
-            text = extract_ai_result(test_result)
+        text = extract_ai_result(diag_result)
+        if text is not None:
+            st.session_state["diag_running"] = False
             if text and not text.startswith("__BROWSER_FAILED__"):
                 st.success(f"✅ 浏览器端网关调用成功！返回: {text[:50]}")
             else:
