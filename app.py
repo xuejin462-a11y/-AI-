@@ -107,19 +107,16 @@ def get_output_dir():
 
 
 # ═══════════════════════════════════════════
-#  参考曲搜索下载（yt-dlp）
+#  参考曲搜索下载（网易云 API + yt-dlp 兜底）
 # ═══════════════════════════════════════════
 
-def search_and_download_song(query, output_dir):
-    """通过网易云音乐搜索并下载歌曲，返回 (文件路径, 歌名) 或 (None, 错误信息)"""
+def _download_from_netease(query, output_dir):
+    """通过网易云音乐 API 搜索并下载，返回 (filepath, title) 或 (None, None)"""
     import json as _json
-
     headers = {
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
         "Referer": "https://music.163.com/",
     }
-
-    # 1. 搜索歌曲
     try:
         r = requests.post(
             "https://music.163.com/api/search/get/web",
@@ -128,14 +125,8 @@ def search_and_download_song(query, output_dir):
         )
         data = r.json()
         if data.get("code") != 200 or not data.get("result", {}).get("songs"):
-            return None, f"搜索「{query}」无结果，请换个关键词试试"
-    except Exception as e:
-        return None, f"搜索请求失败: {e}"
-
-    songs = data["result"]["songs"]
-
-    # 2. 批量获取播放 URL
-    try:
+            return None, None
+        songs = data["result"]["songs"]
         song_ids = [s["id"] for s in songs]
         r2 = requests.get(
             "https://music.163.com/api/song/enhance/player/url",
@@ -143,43 +134,87 @@ def search_and_download_song(query, output_dir):
             headers=headers, timeout=15,
         )
         url_map = {d["id"]: d for d in r2.json().get("data", [])}
-    except Exception as e:
-        return None, f"获取播放地址失败: {e}"
-
-    # 3. 找第一个有 URL 的歌曲并下载
-    os.makedirs(output_dir, exist_ok=True)
-    for s in songs:
-        ud = url_map.get(s["id"], {})
-        audio_url = ud.get("url")
-        if not audio_url:
-            continue
-
-        artists = "/".join(a["name"] for a in s["artists"])
-        title = f"{artists} - {s['name']}"
-        safe_name = title.replace("/", "_").replace("\\", "_")[:50]
-        filepath = os.path.join(output_dir, f"ref_{safe_name}.mp3")
-
-        try:
+        os.makedirs(output_dir, exist_ok=True)
+        for s in songs:
+            audio_url = url_map.get(s["id"], {}).get("url")
+            if not audio_url:
+                continue
+            artists = "/".join(a["name"] for a in s["artists"])
+            title = f"{artists} - {s['name']}"
+            safe_name = title.replace("/", "_").replace("\\", "_")[:50]
+            filepath = os.path.join(output_dir, f"ref_{safe_name}.mp3")
             r3 = requests.get(audio_url, headers=headers, timeout=60, stream=True)
             r3.raise_for_status()
             with open(filepath, "wb") as f:
                 for chunk in r3.iter_content(8192):
                     f.write(chunk)
-            if os.path.getsize(filepath) > 1000:  # 排除空文件
+            if os.path.getsize(filepath) > 1000:
                 return filepath, title
             os.remove(filepath)
-        except Exception:
-            continue
+    except Exception:
+        pass
+    return None, None
 
-    # 所有结果都无法下载（全是付费曲目）
-    top_results = []
-    for s in songs[:5]:
-        artists = "/".join(a["name"] for a in s["artists"])
-        top_results.append(f"• {artists} - {s['name']}")
+
+def _download_from_youtube(query, output_dir):
+    """通过 yt-dlp 从 YouTube 搜索下载，返回 (filepath, title) 或 (None, error_msg)"""
+    try:
+        import yt_dlp
+    except ImportError:
+        return None, "yt-dlp 未安装"
+
+    os.makedirs(output_dir, exist_ok=True)
+    output_template = os.path.join(output_dir, "ref_%(title).50s.%(ext)s")
+    ydl_opts = {
+        "format": "bestaudio/best",
+        "postprocessors": [{
+            "key": "FFmpegExtractAudio",
+            "preferredcodec": "mp3",
+            "preferredquality": "192",
+        }],
+        "outtmpl": output_template,
+        "default_search": "ytsearch1",
+        "quiet": True,
+        "no_warnings": True,
+        "socket_timeout": 30,
+        "retries": 3,
+    }
+    try:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            info = ydl.extract_info(query, download=True)
+            if "entries" in info:
+                info = info["entries"][0]
+            title = info.get("title", "unknown")
+            mp3_files = sorted(
+                [f for f in os.listdir(output_dir) if f.startswith("ref_") and f.endswith(".mp3")],
+                key=lambda f: os.path.getmtime(os.path.join(output_dir, f)),
+                reverse=True,
+            )
+            if mp3_files:
+                return os.path.join(output_dir, mp3_files[0]), title
+    except Exception as e:
+        return None, str(e)
+    return None, "下载完成但找不到文件"
+
+
+def search_and_download_song(query, output_dir):
+    """搜索并下载歌曲：网易云 API 优先 → yt-dlp YouTube 兜底"""
+    # 优先：网易云音乐 API（纯 HTTP，Cloud 兼容）
+    filepath, title = _download_from_netease(query, output_dir)
+    if filepath:
+        return filepath, title
+
+    # 兜底：yt-dlp 从 YouTube 下载
+    filepath, result = _download_from_youtube(query, output_dir)
+    if filepath:
+        return filepath, result
+
     return None, (
-        f"「{query}」的搜索结果均为付费歌曲，无法直接下载。\n"
-        f"搜索到的歌曲：\n" + "\n".join(top_results) + "\n\n"
-        f"建议：在本地下载后用「上传文件」方式上传。"
+        f"「{query}」下载失败（网易云无免费版本，YouTube 下载也未成功）。\n\n"
+        f"你可以去 Melody 工具下载：\n"
+        f"https://melody.panshi-gy.netease.com/tools\n"
+        f"账号: xuejin01 / 密码: melody888\n\n"
+        f"下载后用「上传文件」方式上传即可。"
     )
 
 
