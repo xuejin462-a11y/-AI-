@@ -499,6 +499,48 @@ if page == "⚙️ 设置":
             st.markdown(f"⬜ **{name}** — {desc}（未配置）")
 
     st.markdown("---")
+
+    # ── 网关连通性诊断 ──
+    st.subheader("🔧 网关诊断")
+    if st.button("测试 AI 网关连通性"):
+        with st.spinner("正在测试网易 AI 网关..."):
+            try:
+                resp = requests.post(
+                    f"{NETEASE_BASE_URL}/chat/completions",
+                    headers={
+                        "Authorization": f"Bearer {NETEASE_API_KEY}",
+                        "Content-Type": "application/json",
+                    },
+                    json={
+                        "model": "gemini-3-pro",
+                        "max_tokens": 20,
+                        "messages": [{"role": "user", "content": "回复OK"}],
+                    },
+                    timeout=15,
+                )
+                if resp.status_code == 200:
+                    st.success(f"✅ 网易 AI 网关连通正常（HTTP {resp.status_code}）")
+                else:
+                    st.error(f"❌ 网关返回 HTTP {resp.status_code}: {resp.text[:300]}")
+            except Exception as e:
+                st.error(f"❌ 网关连接失败: {e}")
+
+        with st.spinner("正在测试 Gemini 直连降级通道..."):
+            try:
+                resp2 = requests.post(
+                    f"{GEMINI_API_BASE}/models/gemini-2.5-flash:generateContent?key={GEMINI_API_KEY}",
+                    headers={"Content-Type": "application/json"},
+                    json={"contents": [{"parts": [{"text": "回复OK"}]}]},
+                    timeout=15,
+                )
+                if resp2.status_code == 200:
+                    st.success(f"✅ Gemini 直连降级通道正常（HTTP {resp2.status_code}）")
+                else:
+                    st.warning(f"⚠️ Gemini 直连返回 HTTP {resp2.status_code}")
+            except Exception as e:
+                st.warning(f"⚠️ Gemini 直连失败: {e}")
+
+    st.markdown("---")
     st.caption("💡 你的密钥只保存在当前浏览器会话中，关闭页面后需要重新输入。我们不会存储你的密钥。")
 
 
