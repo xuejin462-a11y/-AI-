@@ -10,6 +10,8 @@ import os
 import sys
 import tempfile
 import time
+import requests
+import json
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 
@@ -112,8 +114,7 @@ def get_output_dir():
 
 def _download_from_netease(query, output_dir):
     """通过网易云音乐 API 搜索并下载，返回 (filepath, title) 或 (None, None)"""
-    import json as _json
-    headers = {
+        headers = {
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
         "Referer": "https://music.163.com/",
     }
@@ -130,7 +131,7 @@ def _download_from_netease(query, output_dir):
         song_ids = [s["id"] for s in songs]
         r2 = requests.get(
             "https://music.163.com/api/song/enhance/player/url",
-            params={"ids": _json.dumps(song_ids), "br": 320000},
+            params={"ids": json.dumps(song_ids), "br": 320000},
             headers=headers, timeout=15,
         )
         url_map = {d["id"]: d for d in r2.json().get("data", [])}
@@ -253,10 +254,10 @@ def show_suno_fallback(lyrics, style_prompt, title):
 #  AI 写词引擎（Gemini + Claude 双模型比稿）
 # ═══════════════════════════════════════════
 
-LYRICS_PROMPT_TEMPLATE = """你是一位顶尖华语流行音乐词作者。
+LYRICS_PROMPT_TEMPLATE = """你是一位顶尖华语流行音乐词作者，擅长根据主题和情绪创作触动人心的歌词。
 
 ## 任务
-创作一首原创歌词。
+根据以下信息创作一首原创歌词。
 
 ## 基本信息
 - 主题/灵感: {inspiration}
@@ -266,31 +267,48 @@ LYRICS_PROMPT_TEMPLATE = """你是一位顶尖华语流行音乐词作者。
 - BPM: {bpm}
 - 语言: 中英混搭
 
-## 歌词标准（硬性要求）
-1. 禁止照搬任何现有歌词，必须100%原创
-2. 用意象写感情，禁止直述情绪（❌我很孤独 → ✅窗外的麻雀在电线杆上多嘴）
-3. 每首歌一个情绪切面，不要贪多
-4. 副歌高音位用开口韵母：-a, -ai, -ao, -ang
-5. 押韵是硬性要求，每段韵脚统一
-6. 用 [Verse] [Chorus] [Bridge] 等标签分段
-7. 每行7-11字，Verse 3-4行/段，Chorus 4-6行
-8. 禁止大白话/流水账，每句必须有意象转化
-9. 禁止励志口号/库存套话/万能情感词堆砌
-10. Chorus 核心句要有传唱记忆点
-11. 有画面有行为，口语化年轻化，无书面腔/古风腔
-12. 中英混搭加分（适当位置用有实际含义的英文短句）
-13. 多音字标注拼音（如：觉jiao4）
-14. 控制总时长 150-180秒
+## 歌词红线（硬性要求，违反任何一条即不合格）
 
-## Suno Style Prompt（同时输出）
-按公式输出：[流派+情绪] + [主导乐器] + [人声特质] + [节奏与动态]
-严格不超过200字符。
+### 核心原则
+1. **100%原创**，禁止照搬任何现有歌词
+2. **不叙事讲故事，要抽象提炼核心情感，用意象书写感情**
+3. **一首歌一个情绪切面**，不要把爱恨离愁全塞进去
 
-## 输出格式
-1. 完整歌词（带段落标签 [Verse 1] [Chorus] 等）
-2. Suno Style Prompt
-3. 押韵方案说明（每段用什么韵）
-4. 一句话创作思路
+### 意象与表达
+4. **禁止直述情绪**，每句必须有意象转化（物代情技法）：
+   - ❌ 我很孤独 → ✅ 窗外的麻雀在电线杆上多嘴
+   - ❌ 你让我心碎 → ✅ 你说"随便"的那个下午，咖啡凉了两遍
+   - ❌ 我想你 → ✅ 对话框停在"正在输入"
+5. **禁止意象堆砌** — 全曲只用1-2个核心意象深入展开，不要风/雨/花/海/月/星全上
+6. **禁止万能情感词** — "回忆/遗憾/永远/离开/一切/自由/只能/最后"全曲最多出现1次
+7. **禁止励志口号/库存套话** — 「收伞也能走出来」「千年修行留不住」都是反面教材
+8. **禁止古风腔** — "旧罗裳/西厢/轩窗"是反面教材，要现代意象+诗意表达
+
+### 韵律与结构
+9. **押韵是硬性要求** — 每段韵脚统一，提前规划韵脚方案
+10. **副歌高音位用开口韵母**: -a, -ai, -ao, -ang, -iang, -uang
+11. **高音位禁用第三声**，用一声或四声
+12. 用 [Verse] [Chorus] [Bridge] 等标签分段
+13. 每行7-11字，Verse 3-4行/段，Chorus 4-6行
+14. **Chorus核心句要有传唱记忆点** — 至少有一处"看似A实则B"的反转/张力
+
+### 内容安全
+15. **禁止出现真实人名/角色名** — 用"你""我"代替
+16. **禁止血腥/暴力意象**
+17. **内容必须大众可理解** — 禁止小众梗/品牌名/圈层黑话
+18. 禁止连续3句以上相同句式开头
+19. 禁止无意义口癖词（baby/darling/oh yeah 除非是Hook核心）
+
+### 其他
+20. **中英混搭加分** — 适当位置用有实际含义的英文短句
+21. 多音字标注拼音（如：觉jiao4）
+22. 控制歌词量对应 150-180秒
+23. **常识校验** — 写完逐句检查场景是否合理
+
+## 输出格式（严格按此顺序）
+1. **歌词**（带段落标签 [Verse 1] [Chorus] 等，完整输出，不得省略任何段落）
+2. **押韵方案说明**（每段用什么韵）
+3. **一句话创作思路**
 """
 
 
@@ -300,15 +318,22 @@ NETEASE_API_KEY = "trltfs9kdk59cyfw.ov211ltwsnx1fm0kwtz4v8dfp8xmls8t"
 
 
 def _call_netease_gateway(model, prompt, max_tokens=4096):
-    """通过网易 AI 网关调用模型（OpenAI-compatible）"""
-    from openai import OpenAI
-    client = OpenAI(base_url=NETEASE_BASE_URL, api_key=NETEASE_API_KEY)
-    response = client.chat.completions.create(
-        model=model,
-        max_tokens=max_tokens,
-        messages=[{"role": "user", "content": prompt}],
+    """通过网易 AI 网关调用模型（纯 requests，无 SDK 依赖）"""
+    resp = requests.post(
+        f"{NETEASE_BASE_URL}/chat/completions",
+        headers={
+            "Authorization": f"Bearer {NETEASE_API_KEY}",
+            "Content-Type": "application/json",
+        },
+        json={
+            "model": model,
+            "max_tokens": max_tokens,
+            "messages": [{"role": "user", "content": prompt}],
+        },
+        timeout=120,
     )
-    return response.choices[0].message.content
+    resp.raise_for_status()
+    return resp.json()["choices"][0]["message"]["content"]
 
 
 def generate_lyrics_gemini(inspiration, mood, genre, vocal, bpm):
@@ -761,6 +786,25 @@ elif page == "🎵 写一首歌":
                     height=300,
                     key="final_lyrics_edit",
                 )
+
+                # 自动生成歌名
+                if lyrics_input and not title:
+                    if "auto_title" not in st.session_state:
+                        st.session_state["auto_title"] = ""
+                    if st.button("🏷️ AI 起歌名", type="secondary"):
+                        with st.spinner("AI 起名中..."):
+                            try:
+                                name_result = _call_netease_gateway(
+                                    "claude-haiku-4-5-20251001",
+                                    f"根据以下歌词，起3个歌名（2-5个字，有意境，不要太直白）。只输出歌名，每行一个，不要编号不要解释。\n\n{lyrics_input[:500]}",
+                                    max_tokens=100,
+                                )
+                                st.session_state["auto_title"] = name_result.strip()
+                            except Exception as e:
+                                st.error(f"起名失败: {e}")
+                    if st.session_state.get("auto_title"):
+                        st.markdown(f"**AI 建议歌名：**\n{st.session_state['auto_title']}")
+                        st.caption("请在上方「歌名」输入框填入你喜欢的名字")
 
                 st.markdown("---")
     # ═══════════════════════════════════════════
