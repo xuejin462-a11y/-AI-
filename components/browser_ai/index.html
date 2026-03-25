@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body { margin: 0; padding: 0; font-family: sans-serif; }
+#status { font-size: 14px; color: #666; padding: 4px 0; }
+</style>
+</head>
+<body>
+<div id="status"></div>
+<script>
+// ── Streamlit Component Protocol ──
+function sendMsg(type, data) {
+    window.parent.postMessage(Object.assign({isStreamlitMessage: true, type: type}, data), "*");
+}
+function setComponentValue(value) { sendMsg("streamlit:setComponentValue", {value: value}); }
+function setFrameHeight(h) { sendMsg("streamlit:setFrameHeight", {height: h}); }
+function componentReady() { sendMsg("streamlit:componentReady", {apiVersion: 1}); }
+
+// ── State ──
+let _fetching = false;
+let _result = null;
+let _currentRequestId = null;
+
+// ── Render Handler ──
+window.addEventListener("message", function(event) {
+    if (event.data.type !== "streamlit:render") return;
+    var args = event.data.args;
+
+    // No trigger = idle, hide component
+    if (!args || !args.request_id) {
+        setFrameHeight(0);
+        return;
+    }
+
+    // Same request already completed - return cached result
+    if (args.request_id === _currentRequestId && _result !== null) {
+        setComponentValue(_result);
+        setFrameHeight(0);
+        return;
+    }
+
+    // New request - reset state
+    if (args.request_id !== _currentRequestId) {
+        _currentRequestId = args.request_id;
+        _fetching = false;
+        _result = null;
+    }
+
+    // Already fetching this request - wait
+    if (_fetching) {
+        return;
+    }
+
+    // Start fetch
+    _fetching = true;
+    document.getElementById("status").textContent = "AI " + (args.model || "") + " 思考中...";
+    setFrameHeight(24);
+
+    fetch(args.api_url + "/chat/completions", {
+        method: "POST",
+        headers: {
+            "Authorization": "Bearer " + args.api_key,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            model: args.model,
+            max_tokens: args.max_tokens || 4096,
+            messages: [{role: "user", content: args.prompt}]
+        })
+    })
+    .then(function(r) {
+        if (!r.ok) {
+            return r.text().then(function(t) { throw new Error("HTTP " + r.status + ": " + t.substring(0, 200)); });
+        }
+        return r.json();
+    })
+    .then(function(data) {
+        var msg = data.choices[0].message;
+        var content = msg.content || msg.reasoning_content || "";
+        _result = {content: content, status: "ok"};
+        _fetching = false;
+        setComponentValue(_result);
+        document.getElementById("status").textContent = "";
+        setFrameHeight(0);
+    })
+    .catch(function(err) {
+        _result = {error: err.message, status: "error"};
+        _fetching = false;
+        setComponentValue(_result);
+        document.getElementById("status").textContent = "";
+        setFrameHeight(0);
+    });
+});
+
+componentReady();
+setFrameHeight(0);
+</script>
+</body>
+</html>
